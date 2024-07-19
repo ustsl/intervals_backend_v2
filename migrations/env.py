@@ -17,6 +17,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from src.database.base import Base
 
 from src.database.models.user_model.models import UserModel
+from src.database.models.access_token.models import AccessTokenModel
 
 target_metadata = Base.metadata
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@localhost:5432/{DB_NAME}"

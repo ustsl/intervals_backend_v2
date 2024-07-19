@@ -5,7 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class UserModel(SQLAlchemyBaseUserTableUUID, Base):
+    pass
 
-    @classmethod
-    async def get_db(session: AsyncSession):
-        yield SQLAlchemyUserDatabase(session, UserModel)
+
+async def get_user_db(session: AsyncSession):
+    yield SQLAlchemyUserDatabase(session, UserModel)
