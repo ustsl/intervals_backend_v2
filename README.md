@@ -1,4 +1,4 @@
-# AI HANDLER
+# intervals
 
 
 # Path for start:
