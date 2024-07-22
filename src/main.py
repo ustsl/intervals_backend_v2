@@ -1,15 +1,21 @@
-from typing import Union
-
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from src.api.routes import main_api_router
 
-app = FastAPI()
+#########################
+# BLOCK WITH API ROUTES #
+#########################
+
+# create instance of the app
+app = FastAPI(title="ai_handler")
 
 
-@app.get("/")
-def read_root():
-    return {"details": "Intervals / mobile report system"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(main_api_router)

@@ -18,3 +18,20 @@ def exception_dal(func: Callable[..., Awaitable[Any]]) -> Callable[..., Awaitabl
             raise HTTPException(status_code=500, detail=f"{e}")
 
     return wrapper
+
+
+def exception_soft_dal(
+    func: Callable[..., Awaitable[Any]]
+) -> Callable[..., Awaitable[Any]]:
+    @wraps(func)
+    async def wrapper(*args, **kwargs) -> Any:
+        try:
+            return await func(*args, **kwargs)
+        except NoResultFound:
+            return {"status_code": 404}
+        except SQLAlchemyError as e:
+            return HTTPException(status_code=500, detail=f"{e}")
+        except Exception as e:
+            return HTTPException(status_code=500, detail=f"{e}")
+
+    return wrapper
