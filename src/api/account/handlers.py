@@ -16,23 +16,7 @@ current_user = fastapi_users.current_user()
 @router.get("/")
 async def get_account(
     user=Depends(current_user), db: AsyncSession = Depends(get_db)
-):  # -> AccountSchema:
+) -> AccountSchema:
 
     result = await _get_account_or_create(user_id=user.id, db=db)
-
     return result
-
-
-# @router.post("/", dependencies=[Depends(current_user)])
-# async def create_account(
-#     user_id: str, db: AsyncSession = Depends(get_db)
-# ) -> UserRightsSchema:
-#     return await _create_user_rights(user_id=user_id, db=db)
-
-
-# @router.patch("/", dependencies=[Depends(current_user)])
-# async def update_account(
-#     user_id: int, updates: UserRightsExternalSchema, db: AsyncSession = Depends(get_db)
-# ):
-#     res = await _update_user_rights(user_id=user_id, updates=updates, db=db)
-#     return res
