@@ -5,7 +5,7 @@ from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
 from src.settings import SECRET_AUTH_TOKEN
-from src.database.models.user_model.models import UserModel, get_user_db
+from database.models.user_model.tables import UserModel, get_user_db
 
 SECRET = SECRET_AUTH_TOKEN
 

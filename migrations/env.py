@@ -15,8 +15,9 @@ from src.settings import DB_NAME, DB_PASSWORD, DB_USER
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from src.database.base import Base
-from src.database.models.user_model.models import UserModel
-from src.database.models.account_model.models import AccountModel
+from src.database.models.user_model.tables import UserModel
+from src.database.models.account_model.tables import AccountModel
+from src.database.models.data_model.tables import DataModel
 
 target_metadata = Base.metadata
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@localhost:5432/{DB_NAME}"

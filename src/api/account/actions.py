@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.models.account_model.dals import AccountDAL
-from src.database.models.account_model.models import AccountModel
+from database.models.account_model.tables import AccountModel
 
 
 async def _create_account(user_id: uuid.UUID, db: AsyncSession):
