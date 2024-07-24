@@ -1,6 +1,6 @@
 # TODO
 
-- create post, get, list, path method on data model with user restriction
+- create get, list, path method on data model with user restriction
 - create tests on data model
 - create widget model
 - create chart model

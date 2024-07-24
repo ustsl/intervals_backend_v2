@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.models.account_model.dals import AccountDAL
-from database.models.account_model.tables import AccountModel
+from src.database.models.account_model.tables import AccountModel
 
 
 async def _create_account(user_id: uuid.UUID, db: AsyncSession):
@@ -12,10 +12,14 @@ async def _create_account(user_id: uuid.UUID, db: AsyncSession):
         return result
 
 
-async def _get_account_or_create(user_id: uuid.UUID, db: AsyncSession):
-
+async def _get_account(user_id: uuid.UUID, db: AsyncSession):
     obj_dal = AccountDAL(db_session=db, model=AccountModel)
     account = await obj_dal.get_with_user_id(user_id=user_id)
+    return account
+
+
+async def _get_account_or_create(user_id: uuid.UUID, db: AsyncSession):
+    account = await _get_account(user_id=user_id, db=AsyncSession)
     if isinstance(account, dict) and account.get("status_code") == 404:
         return await _create_account(user_id=user_id, db=db)
     return account

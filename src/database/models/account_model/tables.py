@@ -17,3 +17,5 @@ class AccountModel(Base, MaintenanceModel):
     user = Column(
         UUID(as_uuid=True), ForeignKey("user.id"), nullable=False, unique=True
     )
+
+    data_relation = relationship("DataModel", back_populates="account_relation")
