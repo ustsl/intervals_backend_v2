@@ -11,6 +11,11 @@ class DataSchema(BaseModel):
     time_update: datetime
 
 
+class FullDataSchema(DataSchema):
+    time_create: datetime
+    container: Dict[str, Any]
+
+
 class PaginatedDataSchema(BaseModel):
     total: int
     offset: int
