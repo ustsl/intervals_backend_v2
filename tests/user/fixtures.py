@@ -16,7 +16,17 @@ def create_user_fuxture():
         },
     )
     data = response.json()
+    get_account()
     return data
+
+
+def get_account():
+    user = login_user()
+    headers = {"Authorization": f"Bearer {user}"}
+    response = client.get("/account/", headers=headers)
+    assert response.status_code == 200
+    data = response.json()
+    assert data.get("is_active")
 
 
 def login_user():

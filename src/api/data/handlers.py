@@ -2,10 +2,17 @@ from fastapi import APIRouter, Depends
 import fastapi_users
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.data.actions.delete import _delete_data_container
+from src.api.data.actions.patch import _patch_data_container
 from src.api.data.actions.get import _get_data_container, _get_data_containers
-from src.api.account.actions import _get_account
+from src.api.account.actions import _get_account, _get_account_or_create
 from src.api.data.actions.post import _create_data_container
-from src.api.data.schemas import PaginatedDataSchema, DataPostSchema, FullDataSchema
+from src.api.data.schemas import (
+    DataSchema,
+    PaginatedDataSchema,
+    DataPostSchema,
+    FullDataSchema,
+)
 from src.database.session import get_db
 from src.api.auth.handlers import fastapi_users
 
@@ -14,11 +21,11 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.post("/", status_code=201)
+@router.post("/", status_code=201, response_model=DataSchema)
 async def post_data_container(
     body: DataPostSchema, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):
-    account = await _get_account(user_id=user.id, db=db)
+    account = await _get_account_or_create(user_id=user.id, db=db)
     data_container = await _create_data_container(
         data=body, account_id=account.id, db=db
     )
@@ -46,3 +53,28 @@ async def get_data_container(
         data_id=data_id, account_id=account.id, db=db
     )
     return data_container
+
+
+@router.patch("/{data_id}", status_code=200)
+async def patch_data_container(
+    data_id: str,
+    updates: dict,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    account = await _get_account(user_id=user.id, db=db)
+    result = await _patch_data_container(
+        data_id=data_id, account_id=account.id, updates=updates, db=db
+    )
+    return result
+
+
+@router.delete("/{data_id}", status_code=200)
+async def delete_data_container(
+    data_id: str,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    account = await _get_account(user_id=user.id, db=db)
+    delete = await _delete_data_container(data_id=data_id, account_id=account.id, db=db)
+    return delete

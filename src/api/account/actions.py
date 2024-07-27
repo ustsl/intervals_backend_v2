@@ -19,7 +19,7 @@ async def _get_account(user_id: uuid.UUID, db: AsyncSession):
 
 
 async def _get_account_or_create(user_id: uuid.UUID, db: AsyncSession):
-    account = await _get_account(user_id=user_id, db=AsyncSession)
+    account = await _get_account(user_id=user_id, db=db)
     if isinstance(account, dict) and account.get("status_code") == 404:
         return await _create_account(user_id=user_id, db=db)
     return account

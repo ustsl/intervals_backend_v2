@@ -1,6 +1,6 @@
 from uuid import UUID
 from fastapi import HTTPException
-from sqlalchemy import desc, func, select
+from sqlalchemy import delete, desc, func, select, update
 from src.database.utils import exception_dal, exception_soft_dal
 from src.database.dals import BaseDAL
 
@@ -11,12 +11,35 @@ from src.database.dals import BaseDAL
 
 class DataDAL(BaseDAL):
 
-    # @exception_soft_dal
-    # async def get_with_user_id(self, user_id: int):
-    #     query = select(self.model).where(self.model.user == user_id)
-    #     db_query_result = await self.db_session.execute(query)
-    #     obj = db_query_result.scalar_one()
-    #     return obj
+    @exception_dal
+    async def delete(self, data_id: UUID, account_id: UUID):
+        try:
+            query = delete(self.model).where(
+                self.model.id == data_id, self.model.account == account_id
+            )
+            await self.db_session.execute(query)
+            await self.db_session.commit()
+            return {"success": "Obj deleted successfully"}
+        except Exception as e:
+            await self.db_session.rollback()
+            return {"error": f"Error deleting: {str(e)}"}
+
+    @exception_dal
+    async def update(self, data_id: UUID, account_id: UUID, **kwargs):
+        try:
+            update_values = {k: v for k, v in kwargs.items() if v is not None}
+            query = (
+                update(self.model)
+                .where(self.model.id == data_id, self.model.account == account_id)
+                .values(**update_values)
+                .execution_options(synchronize_session="fetch")
+            )
+            await self.db_session.execute(query)
+            await self.db_session.commit()
+            return {"success": "Updated successfully"}
+        except Exception as e:
+            await self.db_session.rollback()
+            return {"error": f"Error updating: {str(e)}"}
 
     async def create(self, title: str, container: dict, account_id: UUID):
         try:
