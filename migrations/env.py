@@ -18,6 +18,9 @@ from src.database.base import Base
 from src.database.models.user_model.tables import UserModel
 from src.database.models.account_model.tables import AccountModel
 from src.database.models.data_model.tables import DataModel
+from src.database.models.widget_model.tables import WidgetModel
+from src.database.models.chart_model.tables import ChartModel
+from src.database.models.dashboard_model.tables import DashboardModel
 
 target_metadata = Base.metadata
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@localhost:5432/{DB_NAME}"

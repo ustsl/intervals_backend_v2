@@ -18,3 +18,4 @@ class DataModel(Base, TimeModel):
     is_open = Column(Boolean(), default=False, nullable=False)
 
     account_relation = relationship("AccountModel", back_populates="data_relation")
+    widget_relation = relationship("WidgetModel", back_populates="data_relation")

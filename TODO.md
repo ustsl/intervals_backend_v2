@@ -1,8 +1,6 @@
 # TODO
 
 - create tests on data model
-- create widget model
-- create chart model
 - chart - create post, 
 - chart get, 
 - chart list, 
