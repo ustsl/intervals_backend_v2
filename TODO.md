@@ -13,7 +13,6 @@
 - widget path method on chart model with user restriction
 - test widget
 - test chart
-- create dashboard model
 - dashboard create post, 
 - dashboard get, 
 - dashboard list, 
