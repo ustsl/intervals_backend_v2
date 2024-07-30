@@ -19,4 +19,3 @@ class ChartModel(Base, TimeModel):
 
     account_relation = relationship("AccountModel", back_populates="chart_relation")
     data_relation = relationship("DataModel", back_populates="chart_relation")
-    chart_relation = relationship("ChartModel", back_populates="chart_relation")

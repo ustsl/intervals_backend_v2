@@ -41,9 +41,11 @@ class DataDAL(BaseDAL):
             await self.db_session.rollback()
             return {"error": f"Error updating: {str(e)}"}
 
-    async def create(self, title: str, container: dict, account_id: UUID):
+    async def create(self, title: str, settings: dict, account_id: UUID, data: UUID):
         try:
-            obj = self.model(title=title, container=container, account=account_id)
+            obj = self.model(
+                title=title, settings=settings, account=account_id, data=data
+            )
             self.db_session.add(obj)
             await self.db_session.flush()
             await self.db_session.commit()

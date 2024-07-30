@@ -19,5 +19,4 @@ class AccountModel(Base, MaintenanceModel):
     )
 
     data_relation = relationship("DataModel", back_populates="account_relation")
-    widget_relation = relationship("WidgetModel", back_populates="account_relation")
     chart_relation = relationship("ChartModel", back_populates="account_relation")

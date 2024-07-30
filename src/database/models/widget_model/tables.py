@@ -17,5 +17,4 @@ class WidgetModel(Base, TimeModel):
     data = Column(UUID(as_uuid=True), ForeignKey("data.id"), nullable=False)
     settings = Column(JSON, nullable=False)
 
-    account_relation = relationship("AccountModel", back_populates="widget_relation")
     data_relation = relationship("DataModel", back_populates="widget_relation")
