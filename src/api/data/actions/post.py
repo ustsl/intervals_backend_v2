@@ -12,7 +12,7 @@ async def _create_data_container(
     async with db as session:
         obj_dal = DataDAL(db_session=session, model=DataModel)
         result = await obj_dal.create(
-            title=data.title, container=data.container, account_id=account_id
+            title=data.title, container=data.container, account=account_id
         )
         serialized_result = DataSchema(
             id=result.id, title=result.title, time_update=result.time_update

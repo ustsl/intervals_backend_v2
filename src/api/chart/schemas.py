@@ -1,8 +1,10 @@
 from typing import List, Union
 import uuid
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel
 from datetime import datetime
+
+from src.api.schemas import PaginateSchemaMixin
 
 
 class AxisYSchema(BaseModel):
@@ -23,6 +25,10 @@ class ChartSchema(BaseModel):
     time_update: datetime
 
 
+class ChartListSchema(ChartSchema):
+    title: str
+
+
 class ChartDataSchema(BaseModel):
     title: str
     data: uuid.UUID
@@ -31,3 +37,7 @@ class ChartDataSchema(BaseModel):
 
 class ChartPostSchema(ChartSchema, ChartDataSchema):
     pass
+
+
+class PaginateChartSchema(PaginateSchemaMixin):
+    containers: List[ChartListSchema]

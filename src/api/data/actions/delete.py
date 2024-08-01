@@ -8,5 +8,5 @@ from sqlalchemy.ext.asyncio import AsyncSession
 async def _delete_data_container(data_id: UUID, account_id: UUID, db: AsyncSession):
     async with db as session:
         obj_dal = DataDAL(db_session=session, model=DataModel)
-        result = await obj_dal.delete(data_id=data_id, account_id=account_id)
+        result = await obj_dal.delete(id=data_id, account=account_id)
         return result

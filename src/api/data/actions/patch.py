@@ -10,5 +10,5 @@ async def _patch_data_container(
 ):
     async with db as session:
         obj_dal = DataDAL(db_session=session, model=DataModel)
-        result = await obj_dal.update(data_id=data_id, account_id=account_id, **updates)
+        result = await obj_dal.update(id=data_id, account=account_id, **updates)
         return result

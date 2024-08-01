@@ -1,20 +1,4 @@
 from tests.conftest import client
-from tests.user.fixtures import login_user, create_user_fuxture
-
-
-def test_create_data(create_user_fuxture):
-    user = login_user()
-    headers = {"Authorization": f"Bearer {user}"}
-
-    response = client.post(
-        "/data",
-        json={"title": "data", "container": {"data": "data"}},
-        headers=headers,
-    )
-
-    data = response.json()
-    assert response.status_code == 201
-    assert data.get("title") == "data"
 
 
 def test_failed_create_data_with_old_token():

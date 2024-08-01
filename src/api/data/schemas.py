@@ -1,8 +1,10 @@
 from typing import Any, Dict, List
 import uuid
 
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, field_validator
 from datetime import datetime
+
+from src.api.schemas import PaginateSchemaMixin
 
 
 class DataSchema(BaseModel):
@@ -16,18 +18,8 @@ class FullDataSchema(DataSchema):
     container: Dict[str, Any]
 
 
-class PaginatedDataSchema(BaseModel):
-    total: int
-    offset: int
+class PaginatedDataSchema(PaginateSchemaMixin):
     containers: List[DataSchema]
-
-    @model_validator(mode="after")
-    def check_total(cls, values):
-        total = values.total
-        containers = values.containers
-        if total < len(containers):
-            raise ValueError("Total cannot be less than the number of containers")
-        return values
 
 
 class DataPostSchema(BaseModel):
