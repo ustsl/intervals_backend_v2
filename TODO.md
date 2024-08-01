@@ -2,7 +2,6 @@
 
 - create tests on data model
 - chart get, 
-- chart list, 
 - chart delete
 - chart path method on widget model with user restriction
 - widget create post, 
