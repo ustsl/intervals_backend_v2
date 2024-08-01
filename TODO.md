@@ -1,7 +1,6 @@
 # TODO
 
 - create tests on data model
-- chart - create post, 
 - chart get, 
 - chart list, 
 - chart delete
