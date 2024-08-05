@@ -3,11 +3,11 @@ import fastapi_users
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-from src.api.chart.actions.get import _get_chart_containers
+from src.api.chart.actions.get import _get_chart_containers, _get_chart_container
 from src.api.chart.actions.post import _create_chart_container
 from src.api.account.actions import _get_account, _get_account_or_create
 
-from src.api.chart.schemas import ChartDataSchema, PaginateChartSchema
+from src.api.chart.schemas import ChartDataSchema, FullChartSchema, PaginateChartSchema
 from src.database.session import get_db
 from src.api.auth.handlers import fastapi_users
 
@@ -40,3 +40,14 @@ async def get_chart_containers(
     )
 
     return data_containers
+
+
+@router.get("/{chart_id}", response_model=FullChartSchema, status_code=200)
+async def get_chart_container(
+    chart_id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+):
+    account = await _get_account(user_id=user.id, db=db)
+    data_container = await _get_chart_container(
+        chart_id=chart_id, account_id=account.id, db=db
+    )
+    return data_container

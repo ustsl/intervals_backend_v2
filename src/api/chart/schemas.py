@@ -35,6 +35,10 @@ class ChartDataSchema(BaseModel):
     settings: dict
 
 
+class FullChartSchema(ChartDataSchema, ChartSchema):
+    pass
+
+
 class ChartPostSchema(ChartSchema, ChartDataSchema):
     pass
 
