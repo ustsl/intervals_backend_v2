@@ -1,14 +1,13 @@
 from sqlalchemy import UUID
-from src.database.models.data_model.tables import DataModel
-from src.database.models.data_model.dals import DataDAL
-from src.api.data.schemas import DataSchema
+from src.database.models.chart_model.tables import ChartModel
+from src.database.models.chart_model.dals import ChartDAL
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def _patch_data_container(
+async def _patch_chart_container(
     updates: dict, id: UUID, account_id: UUID, db: AsyncSession
 ):
     async with db as session:
-        obj_dal = DataDAL(db_session=session, model=DataModel)
+        obj_dal = ChartDAL(db_session=session, model=ChartModel)
         result = await obj_dal.update(id=id, account=account_id, **updates)
         return result

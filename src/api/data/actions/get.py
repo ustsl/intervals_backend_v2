@@ -7,10 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def _get_data_container(
-    data_id: str, account_id: UUID, db: AsyncSession
+    id: str, account_id: UUID, db: AsyncSession
 ) -> DataSchema:
     obj_dal = DataDAL(db_session=db, model=DataModel)
-    obj = await obj_dal.get(id=data_id, account=account_id)
+    obj = await obj_dal.get(id=id, account=account_id)
     return obj
 
 

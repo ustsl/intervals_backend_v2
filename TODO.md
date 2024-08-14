@@ -1,16 +1,11 @@
 # TODO
 
-- create tests on data model
-- chart get, 
-- chart delete
-- chart path method on widget model with user restriction
+- chart path method with user restriction
 - widget create post, 
 - widget get, 
 - widget list, 
 - widget delete,
-- widget path method on chart model with user restriction
-- test widget
-- test chart
+- widget path method with user restriction
 - dashboard create post, 
 - dashboard get, 
 - dashboard list, 
