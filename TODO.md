@@ -1,11 +1,5 @@
 # TODO
 
-- chart path method with user restriction
-- widget create post, 
-- widget get, 
-- widget list, 
-- widget delete,
-- widget path method with user restriction
 - dashboard create post, 
 - dashboard get, 
 - dashboard list, 
@@ -17,5 +11,3 @@
 - create forgot pass email functions
 - check codebase structure
 - deploy
-
-...
