@@ -7,41 +7,29 @@ from datetime import datetime
 from src.api.schemas import PaginateSchemaMixin
 
 
-class AxisYSchema(BaseModel):
-    field: Union[str, int]
-    type: str = None
-    position: str = None
-    color: str = None
-    bg: str = None
-
-
-class SettingsSchema(BaseModel):
-    axisX: Union[str, int]
-    axisY: List[AxisYSchema]
-
-
-class ChartSchema(BaseModel):
+class WidgetSchema(BaseModel):
     id: uuid.UUID
     time_update: datetime
 
 
-class ChartListSchema(ChartSchema):
+class WidgetListSchema(WidgetSchema):
     title: str
 
 
-class ChartDataSchema(BaseModel):
+class WidgetDataSchema(BaseModel):
     title: str
     data: uuid.UUID
-    settings: dict
+    data_column: str
+    offset_for_comparison: int
 
 
-class FullChartSchema(ChartDataSchema, ChartSchema):
+class FullWidgetSchema(WidgetDataSchema, WidgetSchema):
     pass
 
 
-class ChartPostSchema(ChartSchema, ChartDataSchema):
+class WidgetPostSchema(WidgetSchema, WidgetDataSchema):
     pass
 
 
-class PaginateChartSchema(PaginateSchemaMixin):
-    containers: List[ChartListSchema]
+class PaginateWidgetSchema(PaginateSchemaMixin):
+    containers: List[WidgetListSchema]

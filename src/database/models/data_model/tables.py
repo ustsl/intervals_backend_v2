@@ -19,3 +19,4 @@ class DataModel(Base, TimeModel):
 
     account_relation = relationship("AccountModel", back_populates="data_relation")
     chart_relation = relationship("ChartModel", back_populates="data_relation")
+    widget_relation = relationship("WidgetModel", back_populates="data_relation")

@@ -3,7 +3,7 @@ from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def _delete_chart_container(
+async def _delete_widget_container(
     id: UUID, account_id: UUID, db: AsyncSession, objDAL, objModel
 ):
     async with db as session:

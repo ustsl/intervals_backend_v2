@@ -1,26 +1,28 @@
 from sqlalchemy import UUID
-from src.database.models.chart_model.dals import ChartDAL
-from src.database.models.chart_model.tables import ChartModel
-from src.api.chart.schemas import ChartPostSchema, ChartDataSchema
+from src.database.models.widget_model.dals import WidgetDAL
+from src.database.models.widget_model.tables import WidgetModel
+from src.api.widget.schemas import WidgetPostSchema, WidgetDataSchema
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def _create_chart_container(
-    data: ChartDataSchema, account_id: UUID, db: AsyncSession
-) -> ChartPostSchema:
+async def _create_widget_container(
+    data: WidgetDataSchema, account_id: UUID, db: AsyncSession
+) -> WidgetPostSchema:
     async with db as session:
-        obj_dal = ChartDAL(db_session=session, model=ChartModel)
+        obj_dal = WidgetDAL(db_session=session, model=WidgetModel)
         result = await obj_dal.create(
             title=data.title,
-            settings=data.settings,
             account=account_id,
             data=data.data,
+            data_column=data.data_column,
+            offset_for_comparison=data.offset_for_comparison,
         )
-        serialized_result = ChartPostSchema(
+        serialized_result = WidgetPostSchema(
             id=result.id,
             title=result.title,
             time_update=result.time_update,
             data=result.data,
-            settings=result.settings,
+            offset_for_comparison=result.offset_for_comparison,
+            data_column=result.data_column,
         )
         return serialized_result
