@@ -1,4 +1,5 @@
 import pytest
+
 from tests.conftest import client
 from tests.user.fixtures import login_user
 

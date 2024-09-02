@@ -1,5 +1,5 @@
-from tests.conftest import client
 from tests.chart.fixtures import create_chart_fixture
+from tests.conftest import client
 from tests.user.fixtures import login_user
 
 

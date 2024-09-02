@@ -1,9 +1,6 @@
 import uuid
 
 from fastapi import APIRouter
-
-
-from fastapi import APIRouter
 from fastapi_users import FastAPIUsers
 
 from src.api.auth.manager import get_user_manager

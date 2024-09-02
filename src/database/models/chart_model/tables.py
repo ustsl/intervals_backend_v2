@@ -1,11 +1,11 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, JSON, String
+from sqlalchemy import JSON, Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from src.database.mixins.base import TimeModel
 from src.database.base import Base
+from src.database.mixins.base import TimeModel
 
 
 class ChartModel(Base, TimeModel):

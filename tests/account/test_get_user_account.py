@@ -1,5 +1,5 @@
 from tests.conftest import client
-from tests.user.fixtures import login_user, create_user_fuxture
+from tests.user.fixtures import create_user_fuxture, login_user
 
 
 def test_get_records_not_personal(create_user_fuxture):

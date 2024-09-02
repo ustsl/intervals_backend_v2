@@ -1,7 +1,8 @@
 from sqlalchemy import UUID
-from src.database.models.chart_model.tables import ChartModel
-from src.database.models.chart_model.dals import ChartDAL
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.database.models.chart_model.dals import ChartDAL
+from src.database.models.chart_model.tables import ChartModel
 
 
 async def _patch_chart_container(

@@ -1,4 +1,5 @@
 from uuid import UUID
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.models.chart_model.dals import ChartDAL

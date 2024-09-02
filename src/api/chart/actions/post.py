@@ -1,8 +1,9 @@
 from sqlalchemy import UUID
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.api.chart.schemas import ChartDataSchema, ChartPostSchema
 from src.database.models.chart_model.dals import ChartDAL
 from src.database.models.chart_model.tables import ChartModel
-from src.api.chart.schemas import ChartPostSchema, ChartDataSchema
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def _create_chart_container(

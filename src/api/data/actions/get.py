@@ -1,9 +1,11 @@
 from sqlalchemy import UUID
-from src.database.models.data_model.tables import DataModel
-from src.database.models.data_model.dals import DataDAL
-from src.api.account.actions import _get_account
-from src.api.data.schemas import DataPostSchema, DataSchema, PaginatedDataSchema
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.api.account.actions import _get_account
+from src.api.data.schemas import (DataPostSchema, DataSchema,
+                                  PaginatedDataSchema)
+from src.database.models.data_model.dals import DataDAL
+from src.database.models.data_model.tables import DataModel
 
 
 async def _get_data_container(

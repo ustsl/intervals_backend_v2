@@ -1,8 +1,8 @@
-from typing import Any, Dict, List
 import uuid
+from datetime import datetime
+from typing import Any, Dict, List
 
 from pydantic import BaseModel, field_validator
-from datetime import datetime
 
 from src.api.schemas import PaginateSchemaMixin
 

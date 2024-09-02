@@ -1,21 +1,17 @@
-from fastapi import APIRouter, Depends
 import fastapi_users
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
-from src.api.widget.actions.patch import _patch_widget_container
-from src.api.widget.actions.delete import _delete_widget_container
-from src.api.widget.actions.get import _get_widget_containers, _get_widget_container
-from src.api.widget.actions.post import _create_widget_container
 from src.api.account.actions import _get_account, _get_account_or_create
-
-from src.api.widget.schemas import (
-    WidgetDataSchema,
-    FullWidgetSchema,
-    PaginateWidgetSchema,
-)
-from src.database.session import get_db
 from src.api.auth.handlers import fastapi_users
+from src.api.widget.actions.delete import _delete_widget_container
+from src.api.widget.actions.get import (_get_widget_container,
+                                        _get_widget_containers)
+from src.api.widget.actions.patch import _patch_widget_container
+from src.api.widget.actions.post import _create_widget_container
+from src.api.widget.schemas import (FullWidgetSchema, PaginateWidgetSchema,
+                                    WidgetDataSchema)
+from src.database.session import get_db
 
 router = APIRouter()
 

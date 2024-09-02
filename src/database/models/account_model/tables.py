@@ -4,8 +4,8 @@ from sqlalchemy import Boolean, Column, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from src.database.mixins.base import MaintenanceModel
 from src.database.base import Base
+from src.database.mixins.base import MaintenanceModel
 
 
 class AccountModel(Base, MaintenanceModel):
@@ -20,3 +20,6 @@ class AccountModel(Base, MaintenanceModel):
 
     data_relation = relationship("DataModel", back_populates="account_relation")
     chart_relation = relationship("ChartModel", back_populates="account_relation")
+    dashboard_relation = relationship(
+        "DashboardModel", back_populates="account_relation"
+    )

@@ -1,8 +1,8 @@
-from typing import List, Union
 import uuid
+from datetime import datetime
+from typing import List, Union
 
 from pydantic import BaseModel
-from datetime import datetime
 
 from src.api.schemas import PaginateSchemaMixin
 

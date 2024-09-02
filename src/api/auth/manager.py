@@ -4,8 +4,8 @@ from typing import Optional
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
-from src.settings import SECRET_AUTH_TOKEN
 from src.database.models.user_model.tables import UserModel, get_user_db
+from src.settings import SECRET_AUTH_TOKEN
 
 SECRET = SECRET_AUTH_TOKEN
 

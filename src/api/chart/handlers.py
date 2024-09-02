@@ -1,17 +1,17 @@
-from fastapi import APIRouter, Depends
 import fastapi_users
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
-from src.api.chart.actions.patch import _patch_chart_container
-from src.api.chart.actions.delete import _delete_chart_container
-from src.api.chart.actions.get import _get_chart_containers, _get_chart_container
-from src.api.chart.actions.post import _create_chart_container
 from src.api.account.actions import _get_account, _get_account_or_create
-
-from src.api.chart.schemas import ChartDataSchema, FullChartSchema, PaginateChartSchema
-from src.database.session import get_db
 from src.api.auth.handlers import fastapi_users
+from src.api.chart.actions.delete import _delete_chart_container
+from src.api.chart.actions.get import (_get_chart_container,
+                                       _get_chart_containers)
+from src.api.chart.actions.patch import _patch_chart_container
+from src.api.chart.actions.post import _create_chart_container
+from src.api.chart.schemas import (ChartDataSchema, FullChartSchema,
+                                   PaginateChartSchema)
+from src.database.session import get_db
 
 router = APIRouter()
 

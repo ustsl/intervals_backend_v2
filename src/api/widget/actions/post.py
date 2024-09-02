@@ -1,8 +1,9 @@
 from sqlalchemy import UUID
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.api.widget.schemas import WidgetDataSchema, WidgetPostSchema
 from src.database.models.widget_model.dals import WidgetDAL
 from src.database.models.widget_model.tables import WidgetModel
-from src.api.widget.schemas import WidgetPostSchema, WidgetDataSchema
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def _create_widget_container(

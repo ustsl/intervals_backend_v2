@@ -1,20 +1,16 @@
-from fastapi import APIRouter, Depends
 import fastapi_users
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.data.actions.delete import _delete_data_container
-from src.api.data.actions.patch import _patch_data_container
-from src.api.data.actions.get import _get_data_container, _get_data_containers
 from src.api.account.actions import _get_account, _get_account_or_create
-from src.api.data.actions.post import _create_data_container
-from src.api.data.schemas import (
-    DataSchema,
-    PaginatedDataSchema,
-    DataPostSchema,
-    FullDataSchema,
-)
-from src.database.session import get_db
 from src.api.auth.handlers import fastapi_users
+from src.api.data.actions.delete import _delete_data_container
+from src.api.data.actions.get import _get_data_container, _get_data_containers
+from src.api.data.actions.patch import _patch_data_container
+from src.api.data.actions.post import _create_data_container
+from src.api.data.schemas import (DataPostSchema, DataSchema, FullDataSchema,
+                                  PaginatedDataSchema)
+from src.database.session import get_db
 
 router = APIRouter()
 

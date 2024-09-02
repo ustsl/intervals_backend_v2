@@ -1,11 +1,11 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, String, Integer
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from src.database.mixins.base import TimeModel
 from src.database.base import Base
+from src.database.mixins.base import TimeModel
 
 
 class WidgetModel(Base, TimeModel):

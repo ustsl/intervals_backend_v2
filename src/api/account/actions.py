@@ -1,4 +1,5 @@
 import uuid
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.models.account_model.dals import AccountDAL

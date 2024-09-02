@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy import select
-from src.database.utils import exception_dal, exception_soft_dal
+
 from src.database.dals import BaseDAL
+from src.database.utils import exception_dal, exception_soft_dal
 
 ###########################################################
 # BLOCK FOR INTERACTION WITH DATABASE IN BUSINESS CONTEXT #

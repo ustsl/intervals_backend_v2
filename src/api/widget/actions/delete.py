@@ -1,5 +1,4 @@
 from sqlalchemy import UUID
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
 

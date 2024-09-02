@@ -2,11 +2,10 @@ import uuid
 
 from sqlalchemy import JSON, Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
-
-from src.database.mixins.base import TimeModel
-from src.database.base import Base
-
 from sqlalchemy.orm import relationship
+
+from src.database.base import Base
+from src.database.mixins.base import TimeModel
 
 
 class DashboardChart(Base):
@@ -36,11 +35,18 @@ class DashboardModel(Base, TimeModel):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, nullable=False)
-    settings = Column(JSON, nullable=False)
+    settings = Column(JSON, nullable=True)
+    account = Column(UUID(as_uuid=True), ForeignKey("account.id"), nullable=False)
 
     charts = relationship(
-        "DashboardChart", back_populates="dashboard", cascade="all, delete-orphan"
+        "DashboardChart",
+        back_populates="dashboard",
+        cascade="all, delete-orphan",
     )
     widgets = relationship(
-        "DashboardWidget", back_populates="dashboard", cascade="all, delete-orphan"
+        "DashboardWidget",
+        back_populates="dashboard",
+        cascade="all, delete-orphan",
     )
+
+    account_relation = relationship("AccountModel", back_populates="dashboard_relation")

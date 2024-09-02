@@ -1,7 +1,8 @@
 from sqlalchemy import UUID
-from src.database.models.widget_model.tables import WidgetModel
-from src.database.models.widget_model.dals import WidgetDAL
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.database.models.widget_model.dals import WidgetDAL
+from src.database.models.widget_model.tables import WidgetModel
 
 
 async def _patch_widget_container(
