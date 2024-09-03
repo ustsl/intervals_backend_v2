@@ -27,7 +27,7 @@ class DashboardWidgetSchema(BaseModel):
 
 
 class DashboardDetailSchema(DashboardSchema):
-    settings: Dict
+    settings: object = None
     charts: Optional[List[DashboardChartSchema]] = None
     widgets: Optional[List[DashboardWidgetSchema]] = None
 

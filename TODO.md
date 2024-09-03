@@ -1,7 +1,8 @@
 # TODO
 
-- dashboard create post, 
-- dashboard get, 
+
+- dashboard - post chart, post widget
+- dashboard - delete chart, delete widget
 - dashboard list, 
 - dashboard delete,
 - dashboard path method on dashboard model with user restriction

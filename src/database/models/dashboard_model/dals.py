@@ -1,9 +1,28 @@
-from src.database.dals import AccountBaseDAL
+from uuid import UUID
+from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
+from sqlalchemy.exc import NoResultFound
 
-###########################################################
-# BLOCK FOR INTERACTION WITH DATABASE IN BUSINESS CONTEXT #
-###########################################################
+from src.database.utils import exception_dal
+from src.database.dals import AccountBaseDAL
 
 
 class DashboardDAL(AccountBaseDAL):
-    pass
+
+    @exception_dal
+    async def get(self, id: str, account: UUID):
+        query = (
+            select(self.model)
+            .options(
+                selectinload(self.model.charts),
+                selectinload(self.model.widgets),
+            )
+            .where(self.model.id == id, self.model.account == account)
+        )
+
+        db_query_result = await self.db_session.execute(query)
+
+        try:
+            return db_query_result.scalar_one()
+        except NoResultFound:
+            return None
