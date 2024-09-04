@@ -17,6 +17,7 @@ class DashboardChart(Base):
     chart_id = Column(UUID(as_uuid=True), ForeignKey("chart.id"), primary_key=True)
 
     dashboard = relationship("DashboardModel", back_populates="charts")
+    chart = relationship("ChartModel", back_populates="dashboard_charts")
 
 
 class DashboardWidget(Base):
