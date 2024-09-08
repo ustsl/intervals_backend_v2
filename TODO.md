@@ -1,10 +1,10 @@
 # TODO
 
 
+- dashboard - test delete functions
+- dashboard - optimize actions using (boilerplate detected)
 - dashboard - post chart, post widget
-- dashboard - delete chart, delete widget
 - dashboard list, 
-- dashboard delete,
 - dashboard path method on dashboard model with user restriction
 - add secret pass field on dashboard
 - create visitor endpoint with secretpass block on header

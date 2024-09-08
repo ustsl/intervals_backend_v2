@@ -20,13 +20,14 @@ class DashboardPostSchema(BaseModel):
 
 
 class DashboardChartSchema(BaseModel):
-    chart_id: UUID
+    object_id: UUID
     dashboard_id: UUID
     chart: FullChartSchema
 
 
 class DashboardWidgetSchema(BaseModel):
-    widget_id: UUID
+    object_id: UUID
+    dashboard_id: UUID
 
 
 class DashboardDetailSchema(DashboardSchema):

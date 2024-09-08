@@ -1,4 +1,5 @@
 from uuid import UUID
+from sqlalchemy import delete
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.exc import NoResultFound
@@ -30,4 +31,26 @@ class DashboardDAL(AccountBaseDAL):
 
 
 class DashboardRelationDAL(AccountBaseDAL):
-    pass
+
+    @exception_dal
+    async def get(self, dashboard_id: UUID, object_id: UUID):
+        query = select(self.model).where(
+            self.model.dashboard_id == dashboard_id, self.model.object_id == object_id
+        )
+        db_query_result = await self.db_session.execute(query)
+        obj = db_query_result.scalar_one()
+        return obj
+
+    @exception_dal
+    async def delete(self, dashboard_id: UUID, object_id: UUID):
+        try:
+            query = delete(self.model).where(
+                self.model.dashboard_id == dashboard_id,
+                self.model.object_id == object_id,
+            )
+            await self.db_session.execute(query)
+            await self.db_session.commit()
+            return {"success": "Obj deleted successfully"}
+        except Exception as e:
+            await self.db_session.rollback()
+            return {"error": f"Error deleting: {str(e)}"}
