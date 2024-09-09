@@ -6,7 +6,7 @@ TEST_EMAIL = "test@imvo.site"
 TEST_PASSWORD = "CokZorKelime123"
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def create_user_fuxture():
     response = client.post(
         "/auth/register",

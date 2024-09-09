@@ -4,7 +4,7 @@ from tests.conftest import client
 from tests.user.fixtures import login_user
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def create_data_fixture():
     user = login_user()
     headers = {"Authorization": f"Bearer {user}"}

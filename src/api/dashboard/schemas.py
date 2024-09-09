@@ -43,6 +43,6 @@ class PaginateDashboardSchema(PaginateSchemaMixin):
     containers: List[DashboardSchema]
 
 
-class ChartRelationPostSchema(BaseModel):
+class RelationPostSchema(BaseModel):
     dashboard_id: UUID
-    chart_id: UUID
+    object_id: UUID

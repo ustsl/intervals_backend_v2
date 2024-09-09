@@ -12,7 +12,7 @@ from src.api.account.actions import _get_account, _get_account_or_create
 from src.api.auth.handlers import fastapi_users
 from src.api.dashboard.actions.post import _create_dashboard, _relate_chart_to_dashboard
 from src.api.dashboard.schemas import (
-    ChartRelationPostSchema,
+    RelationPostSchema,
     DashboardPostSchema,
     DashboardSchema,
 )

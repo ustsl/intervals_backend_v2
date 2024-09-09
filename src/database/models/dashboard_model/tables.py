@@ -9,7 +9,9 @@ from src.database.mixins.base import TimeModel
 
 
 class DashboardObjectMixin:
-    order = Column(Integer, CheckConstraint("order > 0"), nullable=False, default=0)
+    ordering = Column(
+        Integer, CheckConstraint("ordering > 0"), nullable=False, default=1
+    )
 
 
 class DashboardChart(Base, DashboardObjectMixin):
