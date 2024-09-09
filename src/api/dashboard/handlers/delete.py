@@ -33,6 +33,7 @@ async def delete_dashboard_chart_relation(
 ):
 
     account = await _get_account(user_id=user.id, db=db)
+
     result = await _delete_dashboard_relation(
         dashboard_id=dashboard_id,
         object_id=object_id,

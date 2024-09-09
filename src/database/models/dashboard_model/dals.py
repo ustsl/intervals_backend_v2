@@ -17,7 +17,9 @@ class DashboardDAL(AccountBaseDAL):
         query = (
             select(self.model)
             .options(
-                selectinload(self.model.charts).joinedload(DashboardChart.chart),
+                selectinload(self.model.charts)
+                .joinedload(DashboardChart.chart)
+                .joinedload(ChartModel.data_relation),
                 selectinload(self.model.widgets),
             )
             .where(self.model.id == id, self.model.account == account)

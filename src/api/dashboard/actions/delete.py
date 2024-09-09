@@ -23,14 +23,19 @@ async def _delete_dashboard_relation(
     db: AsyncSession,
 ):
 
-    await _get_dashboard_relation(account_id=account_id, dashboard_id=dashboard_id)
+    await _get_dashboard_relation(
+        dashboard_id=dashboard_id,
+        object_id=object_id,
+        content=content,
+        db=db,
+    )
 
     if content == "chart":
-        await _get_chart_container(account_id=account_id, id=object_id)
+        await _get_chart_container(account_id=account_id, id=object_id, db=db)
         model = DashboardChart
 
     else:
-        await _get_widget_container(account_id=account_id, id=object_id)
+        await _get_widget_container(account_id=account_id, id=object_id, db=db)
         model = DashboardWidget
 
     async with db as session:

@@ -29,7 +29,6 @@ async def _get_dashboard_container(id: str, account_id: UUID, db: AsyncSession):
 
 async def _get_dashboard_relation(
     dashboard_id: UUID,
-    account_id: UUID,
     object_id: UUID,
     content: Literal["chart", "widget"],
     db: AsyncSession,
@@ -40,8 +39,7 @@ async def _get_dashboard_relation(
         model = DashboardWidget
 
     obj_dal = DashboardRelationDAL(db_session=db, model=model)
-    obj = await obj_dal.get(dashboard_id=dashboard_id, chart_id=object_id)
-    await _get_dashboard_container(dashboard_id=dashboard_id, account_id=account_id)
+    obj = await obj_dal.get(dashboard_id=dashboard_id, object_id=object_id)
     if not obj:
         raise HTTPException(status_code=404, detail=f"Relation not found")
     return obj

@@ -4,6 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
+from src.api.data.schemas import FullDataSchema
 from src.api.chart.schemas import FullChartSchema
 from src.api.schemas import PaginateSchemaMixin
 
