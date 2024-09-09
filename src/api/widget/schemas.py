@@ -2,8 +2,9 @@ import uuid
 from datetime import datetime
 from typing import List, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
+from src.api.data.schemas import FullDataSchema
 from src.api.schemas import PaginateSchemaMixin
 
 
@@ -24,7 +25,7 @@ class WidgetDataSchema(BaseModel):
 
 
 class FullWidgetSchema(WidgetDataSchema, WidgetSchema):
-    pass
+    data_relation: FullDataSchema = Field(..., alias="data_relation")
 
 
 class WidgetPostSchema(WidgetSchema, WidgetDataSchema):

@@ -4,13 +4,13 @@ from uuid import UUID
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.dashboard.schemas import DashboardChartSchema, DashboardDetailSchema
-from src.database.models.dashboard_model.dals import DashboardDAL, DashboardRelationDAL
-from src.database.models.dashboard_model.tables import (
-    DashboardModel,
-    DashboardChart,
-    DashboardWidget,
-)
+from src.api.dashboard.schemas import (DashboardChartSchema,
+                                       DashboardDetailSchema)
+from src.database.models.dashboard_model.dals import (DashboardDAL,
+                                                      DashboardRelationDAL)
+from src.database.models.dashboard_model.tables import (DashboardChart,
+                                                        DashboardModel,
+                                                        DashboardWidget)
 
 
 async def _get_dashboard_containers(account_id: UUID, offset: int, db: AsyncSession):

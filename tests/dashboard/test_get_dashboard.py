@@ -1,5 +1,6 @@
 from tests.conftest import client
-from tests.dashboard.fixtures import create_dashboard_fixture, create_chart_fixture_for_dashboard
+from tests.dashboard.fixtures import (create_chart_fixture_for_dashboard,
+                                      create_dashboard_fixture)
 from tests.user.fixtures import login_user
 
 

@@ -1,13 +1,16 @@
 from uuid import UUID
+
 from sqlalchemy import delete
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from sqlalchemy.exc import NoResultFound
 
-from src.database.models.chart_model.tables import ChartModel
-from src.database.models.dashboard_model.tables import DashboardChart
-from src.database.utils import exception_dal
 from src.database.dals import AccountBaseDAL
+from src.database.models.chart_model.tables import ChartModel
+from src.database.models.dashboard_model.tables import (DashboardChart,
+                                                        DashboardWidget)
+from src.database.models.widget_model.tables import WidgetModel
+from src.database.utils import exception_dal
 
 
 class DashboardDAL(AccountBaseDAL):
@@ -20,7 +23,9 @@ class DashboardDAL(AccountBaseDAL):
                 selectinload(self.model.charts)
                 .joinedload(DashboardChart.chart)
                 .joinedload(ChartModel.data_relation),
-                selectinload(self.model.widgets),
+                selectinload(self.model.widgets)
+                .joinedload(DashboardWidget.widget)
+                .joinedload(WidgetModel.data_relation),
             )
             .where(self.model.id == id, self.model.account == account)
         )

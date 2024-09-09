@@ -19,3 +19,4 @@ class WidgetModel(Base, TimeModel):
     offset_for_comparison = Column(Integer, nullable=False)
 
     data_relation = relationship("DataModel", back_populates="widget_relation")
+    dashboard_widgets = relationship("DashboardWidget", back_populates="widget")

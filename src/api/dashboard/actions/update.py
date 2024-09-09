@@ -1,17 +1,18 @@
+from fastapi import HTTPException
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.utils import forbid_account_key
-from src.api.data.schemas import DataSchema
-from src.database.models.data_model.dals import DataDAL
-from src.database.models.data_model.tables import DataModel
+from src.database.models.dashboard_model.dals import DashboardDAL
+from src.database.models.dashboard_model.tables import DashboardModel
 
 
 @forbid_account_key
-async def _patch_data_container(
+async def _patch_dashboard_container(
     updates: dict, id: UUID, account_id: UUID, db: AsyncSession
 ):
+
     async with db as session:
-        obj_dal = DataDAL(db_session=session, model=DataModel)
+        obj_dal = DashboardDAL(db_session=session, model=DashboardModel)
         result = await obj_dal.update(id=id, account=account_id, **updates)
         return result

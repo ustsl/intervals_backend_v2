@@ -35,3 +35,16 @@ def exception_soft_dal(
             return HTTPException(status_code=500, detail=f"{e}")
 
     return wrapper
+
+
+def forbid_account_key(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        updates = kwargs.get("updates", {})
+        if "account" in updates:
+            raise HTTPException(
+                status_code=421, detail="Forbidden to pass 'account' in updates"
+            )
+        return await func(*args, **kwargs)
+
+    return wrapper

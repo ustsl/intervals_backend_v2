@@ -1,8 +1,10 @@
 from uuid import UUID
+
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from src.database.utils import exception_dal
+
 from src.database.dals import AccountBaseDAL
+from src.database.utils import exception_dal
 
 ###########################################################
 # BLOCK FOR INTERACTION WITH DATABASE IN BUSINESS CONTEXT #

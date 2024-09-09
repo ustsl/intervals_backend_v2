@@ -4,12 +4,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.account.actions import _get_account_or_create
 from src.api.auth.handlers import fastapi_users
-from src.api.dashboard.actions.post import _create_dashboard, _relate_chart_to_dashboard
-from src.api.dashboard.schemas import (
-    RelationPostSchema,
-    DashboardPostSchema,
-    DashboardSchema,
-)
+from src.api.dashboard.actions.post import (_create_dashboard,
+                                            _relate_chart_to_dashboard,
+                                            _relate_widget_to_dashboard)
+from src.api.dashboard.schemas import (DashboardPostSchema, DashboardSchema,
+                                       RelationPostSchema)
 from src.database.session import get_db
 
 router = APIRouter()
@@ -49,8 +48,15 @@ async def create_relation(
 
 @router.post("/widget_relation", status_code=201)
 async def create_relation(
-    body: DashboardPostSchema,
+    body: RelationPostSchema,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    pass
+    account = await _get_account_or_create(user_id=user.id, db=db)
+    dashboard_obj = await _relate_widget_to_dashboard(
+        object_id=body.object_id,
+        dashboard_id=body.dashboard_id,
+        account_id=account.id,
+        db=db,
+    )
+    return dashboard_obj

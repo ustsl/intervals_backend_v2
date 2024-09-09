@@ -1,18 +1,16 @@
 from typing import Literal
+
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.chart.actions.get import _get_chart_container
-from src.api.dashboard.actions.get import (
-    _get_dashboard_relation,
-)
+from src.api.dashboard.actions.get import _get_dashboard_relation
 from src.api.widget.actions.get import _get_widget_container
-from src.database.models.dashboard_model.tables import (
-    DashboardChart,
-    DashboardWidget,
-    DashboardModel,
-)
-from src.database.models.dashboard_model.dals import DashboardRelationDAL, DashboardDAL
+from src.database.models.dashboard_model.dals import (DashboardDAL,
+                                                      DashboardRelationDAL)
+from src.database.models.dashboard_model.tables import (DashboardChart,
+                                                        DashboardModel,
+                                                        DashboardWidget)
 
 
 async def _delete_dashboard_relation(

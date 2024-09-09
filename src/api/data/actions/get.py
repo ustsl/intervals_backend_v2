@@ -1,9 +1,9 @@
+from fastapi import HTTPException
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.account.actions import _get_account
-from src.api.data.schemas import (DataPostSchema, DataSchema,
-                                  PaginatedDataSchema)
+from src.api.data.schemas import DataPostSchema, DataSchema, PaginatedDataSchema
 from src.database.models.data_model.dals import DataDAL
 from src.database.models.data_model.tables import DataModel
 
@@ -13,6 +13,8 @@ async def _get_data_container(
 ) -> DataSchema:
     obj_dal = DataDAL(db_session=db, model=DataModel)
     obj = await obj_dal.get(id=id, account=account_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=f"Data not found")
     return obj
 
 

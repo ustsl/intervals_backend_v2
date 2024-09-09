@@ -1,10 +1,7 @@
 from tests.conftest import client
-from tests.dashboard.fixtures import (
-    create_dashboard_fixture,
-    create_chart_fixture_for_dashboard,
-)
-from tests.user.fixtures import create_user_fuxture
-from tests.user.fixtures import login_user
+from tests.dashboard.fixtures import (create_chart_fixture_for_dashboard,
+                                      create_dashboard_fixture)
+from tests.user.fixtures import create_user_fuxture, login_user
 
 
 def test_create_dashboard_chart_relation(
