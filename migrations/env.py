@@ -10,7 +10,7 @@ from pathlib import Path
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from src.settings import DB_NAME, DB_PASSWORD, DB_USER
+from src.settings import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
@@ -28,7 +28,7 @@ from src.database.models.widget_model.tables import WidgetModel
 from src.database.models.temporary_link_model.tables import TemporaryLinkModel
 
 target_metadata = Base.metadata
-DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@localhost:5432/{DB_NAME}"
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 
 # Connect
 config = context.config
