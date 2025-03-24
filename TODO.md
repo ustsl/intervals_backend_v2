@@ -5,4 +5,3 @@
 - create visitor endpoint with secretpass block on header
 - create activate email functions
 - create forgot pass email functions
-- deploy
