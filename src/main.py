@@ -8,7 +8,7 @@ from src.api.routes import main_api_router
 #########################
 
 # create instance of the app
-app = FastAPI(title="INTERVALS BACK-END. BY USTSL.RU")
+app = FastAPI(title="INTERVALS API")
 
 
 app.add_middleware(
