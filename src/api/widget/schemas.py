@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import List, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -8,8 +8,13 @@ from src.api.data.schemas import FullDataSchema
 from src.api.schemas import PaginateSchemaMixin
 
 
+class WidgetSchemaCreate(BaseModel):
+    title: str
+
+
 class WidgetSchema(BaseModel):
     id: uuid.UUID
+    title: str
     time_update: datetime
 
 
@@ -19,13 +24,14 @@ class WidgetListSchema(WidgetSchema):
 
 class WidgetDataSchema(BaseModel):
     title: str
-    data: uuid.UUID
-    data_column: str
-    offset_for_comparison: int
+    data: Optional[uuid.UUID] = None
+    data_column: Optional[str] = None
+    offset_for_comparison: Optional[int] = None
 
 
 class FullWidgetSchema(WidgetDataSchema, WidgetSchema):
-    data_relation: FullDataSchema = Field(..., alias="data_relation")
+
+    data_relation: Optional[FullDataSchema] = None
 
 
 class WidgetPostSchema(WidgetSchema, WidgetDataSchema):

@@ -1,10 +1,14 @@
 import uuid
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, field_validator
 
 from src.api.schemas import PaginateSchemaMixin
+
+
+class DataCreateSchema(BaseModel):
+    title: str
 
 
 class DataSchema(BaseModel):
@@ -15,7 +19,7 @@ class DataSchema(BaseModel):
 
 class FullDataSchema(DataSchema):
     time_create: datetime
-    container: Dict[str, Any]
+    container: Optional[Dict[str, Any]] = None
 
 
 class PaginatedDataSchema(PaginateSchemaMixin):

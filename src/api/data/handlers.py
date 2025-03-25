@@ -8,8 +8,13 @@ from src.api.data.actions.delete import _delete_data_container
 from src.api.data.actions.get import _get_data_container, _get_data_containers
 from src.api.data.actions.patch import _patch_data_container
 from src.api.data.actions.post import _create_data_container
-from src.api.data.schemas import (DataPostSchema, DataSchema, FullDataSchema,
-                                  PaginatedDataSchema)
+from src.api.data.schemas import (
+    DataCreateSchema,
+    DataPostSchema,
+    DataSchema,
+    FullDataSchema,
+    PaginatedDataSchema,
+)
 from src.database.session import get_db
 
 router = APIRouter()
@@ -19,11 +24,13 @@ current_user = fastapi_users.current_user()
 
 @router.post("/", status_code=201, response_model=DataSchema)
 async def post_data_container(
-    body: DataPostSchema, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    body: DataCreateSchema,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account_or_create(user_id=user.id, db=db)
     data_container = await _create_data_container(
-        data=body, account_id=account.id, db=db
+        title=body.title, account_id=account.id, db=db
     )
     return data_container
 

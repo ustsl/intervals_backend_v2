@@ -14,8 +14,8 @@ class ChartModel(Base, TimeModel):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, nullable=False)
     account = Column(UUID(as_uuid=True), ForeignKey("account.id"), nullable=False)
-    data = Column(UUID(as_uuid=True), ForeignKey("data.id"), nullable=False)
-    settings = Column(JSON, nullable=False)
+    data = Column(UUID(as_uuid=True), ForeignKey("data.id"), nullable=True)
+    settings = Column(JSON, nullable=True)
 
     account_relation = relationship("AccountModel", back_populates="chart_relation")
     data_relation = relationship("DataModel", back_populates="chart_relation")

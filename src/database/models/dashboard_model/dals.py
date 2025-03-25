@@ -7,8 +7,7 @@ from sqlalchemy.orm import selectinload
 
 from src.database.dals import AccountBaseDAL
 from src.database.models.chart_model.tables import ChartModel
-from src.database.models.dashboard_model.tables import (DashboardChart,
-                                                        DashboardWidget)
+from src.database.models.dashboard_model.tables import DashboardChart, DashboardWidget
 from src.database.models.widget_model.tables import WidgetModel
 from src.database.utils import exception_dal
 

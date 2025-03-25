@@ -149,7 +149,11 @@ class AccountBaseDAL(BaseDAL):
         )
         db_query_result = await self.db_session.execute(query)
         result = db_query_result.scalars().all()
-        total_count_query = select(func.count()).select_from(self.model)
+        total_count_query = (
+            select(func.count())
+            .select_from(self.model)
+            .where(self.model.account == account)
+        )
         total_count_result = await self.db_session.execute(total_count_query)
         total_count = total_count_result.scalar()
         return {"containers": result, "total": total_count, "offset": offset}

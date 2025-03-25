@@ -14,7 +14,7 @@ class DataModel(Base, TimeModel):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, nullable=False)
     account = Column(UUID(as_uuid=True), ForeignKey("account.id"), nullable=False)
-    container = Column(JSON, nullable=False)
+    container = Column(JSON, nullable=True)
     is_open = Column(Boolean(), default=False, nullable=False)
 
     account_relation = relationship("AccountModel", back_populates="data_relation")

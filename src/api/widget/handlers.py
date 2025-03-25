@@ -5,12 +5,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.api.account.actions import _get_account, _get_account_or_create
 from src.api.auth.handlers import fastapi_users
 from src.api.widget.actions.delete import _delete_widget_container
-from src.api.widget.actions.get import (_get_widget_container,
-                                        _get_widget_containers)
+from src.api.widget.actions.get import _get_widget_container, _get_widget_containers
 from src.api.widget.actions.patch import _patch_widget_container
 from src.api.widget.actions.post import _create_widget_container
-from src.api.widget.schemas import (FullWidgetSchema, PaginateWidgetSchema,
-                                    WidgetDataSchema)
+from src.api.widget.schemas import (
+    FullWidgetSchema,
+    PaginateWidgetSchema,
+    WidgetDataSchema,
+    WidgetSchema,
+    WidgetSchemaCreate,
+)
 from src.database.session import get_db
 
 router = APIRouter()
@@ -18,15 +22,15 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.post("/", status_code=201)
+@router.post("/", status_code=201, response_model=WidgetSchema)
 async def post_widget_container(
-    body: WidgetDataSchema,
+    body: WidgetSchemaCreate,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account_or_create(user_id=user.id, db=db)
     widget_container = await _create_widget_container(
-        data=body, account_id=account.id, db=db
+        title=body.title, account_id=account.id, db=db
     )
     return widget_container
 

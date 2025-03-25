@@ -4,10 +4,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.account.actions import _get_account, _get_account_or_create
 from src.api.auth.handlers import fastapi_users
-from src.api.dashboard.actions.get import (_get_dashboard_container,
-                                           _get_dashboard_containers)
-from src.api.dashboard.schemas import (DashboardDetailSchema,
-                                       PaginateDashboardSchema)
+from src.api.dashboard.actions.get import (
+    _get_dashboard_container,
+    _get_dashboard_containers,
+)
+from src.api.dashboard.schemas import DashboardDetailSchema, PaginateDashboardSchema
 from src.database.session import get_db
 
 router = APIRouter()

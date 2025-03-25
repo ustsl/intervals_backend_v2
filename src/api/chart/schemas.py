@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import List, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -23,6 +23,7 @@ class SettingsSchema(BaseModel):
 
 class ChartSchema(BaseModel):
     id: uuid.UUID
+    title: str
     time_update: datetime
 
 
@@ -30,14 +31,18 @@ class ChartListSchema(ChartSchema):
     title: str
 
 
+class ChartCreateSchema(BaseModel):
+    title: str
+
+
 class ChartDataSchema(BaseModel):
     title: str
-    data: uuid.UUID
-    settings: dict
+    data: Optional[uuid.UUID]
+    settings: Optional[dict]
 
 
 class FullChartSchema(ChartDataSchema, ChartSchema):
-    data_relation: FullDataSchema = Field(..., alias="data_relation")
+    data_relation: Optional[FullDataSchema]
 
 
 class ChartPostSchema(ChartSchema, ChartDataSchema):
