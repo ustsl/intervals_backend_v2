@@ -19,7 +19,7 @@ class DataSchema(BaseModel):
 
 class FullDataSchema(DataSchema):
     time_create: datetime
-    container: Optional[Dict[str, Any]] = None
+    container: Optional[List[Dict[str, Any]]] = None
 
 
 class PaginatedDataSchema(PaginateSchemaMixin):

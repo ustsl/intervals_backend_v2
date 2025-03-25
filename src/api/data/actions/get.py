@@ -8,9 +8,7 @@ from src.database.models.data_model.dals import DataDAL
 from src.database.models.data_model.tables import DataModel
 
 
-async def _get_data_container(
-    id: str, account_id: UUID, db: AsyncSession
-) -> DataSchema:
+async def _get_data_container(id: str, account_id: UUID, db: AsyncSession):
     obj_dal = DataDAL(db_session=db, model=DataModel)
     obj = await obj_dal.get(id=id, account=account_id)
     if not obj:
