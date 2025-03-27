@@ -1,14 +1,12 @@
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.chart.schemas import ChartDataSchema, ChartPostSchema, ChartSchema
+from src.api.chart.schemas import ChartSchema
 from src.database.models.chart_model.dals import ChartDAL
 from src.database.models.chart_model.tables import ChartModel
 
 
-async def _create_chart_container(
-    title: str, account_id: UUID, db: AsyncSession
-) -> ChartPostSchema:
+async def _create_chart_container(title: str, account_id: UUID, db: AsyncSession):
     async with db as session:
         obj_dal = ChartDAL(db_session=session, model=ChartModel)
         result = await obj_dal.create(

@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import List, Optional, Union
+from typing import List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -9,45 +9,36 @@ from src.api.schemas import PaginateSchemaMixin
 
 
 class AxisYSchema(BaseModel):
-    field: Union[str, int]
-    type: str = None
-    position: str = None
-    color: str = None
-    bg: str = None
-
-
-class SettingsSchema(BaseModel):
-    axisX: Union[str, int]
-    axisY: List[AxisYSchema]
-
-
-class ChartSchema(BaseModel):
-    id: uuid.UUID
-    title: str
-    time_update: datetime
-
-
-class ChartListSchema(ChartSchema):
-    title: str
+    field: str
+    side: Literal["left", "right"]
+    type: Literal["bar", "line", "area"]
 
 
 class ChartCreateSchema(BaseModel):
     title: str
 
 
-class ChartDataSchema(BaseModel):
-    title: str
-    data: Optional[uuid.UUID]
-    settings: Optional[dict]
-
-
-class FullChartSchema(ChartDataSchema, ChartSchema):
-    data_relation: Optional[FullDataSchema]
-
-
-class ChartPostSchema(ChartSchema, ChartDataSchema):
-    pass
+class ChartSchema(ChartCreateSchema):
+    id: uuid.UUID
+    time_update: datetime
 
 
 class PaginateChartSchema(PaginateSchemaMixin):
-    containers: List[ChartListSchema]
+    containers: List[ChartSchema]
+
+
+class ChartSettingsSchema(BaseModel):
+    axisX: Optional[str] = None
+    axisY: Optional[List[AxisYSchema]] = None
+
+
+class ChartFullPostSchema(ChartCreateSchema):
+    data: Optional[uuid.UUID] = None
+    settings: Optional[ChartSettingsSchema] = None
+
+    class Config:
+        extra = "forbid"
+
+
+class ChartFullGetSchema(ChartFullPostSchema, ChartSchema):
+    data_relation: Optional[FullDataSchema]

@@ -11,8 +11,9 @@ from src.api.chart.actions.post import _create_chart_container
 from src.api.chart.schemas import (
     ChartCreateSchema,
     ChartSchema,
-    FullChartSchema,
     PaginateChartSchema,
+    ChartFullGetSchema,
+    ChartFullPostSchema,
 )
 from src.database.session import get_db
 
@@ -47,7 +48,7 @@ async def get_chart_containers(
     return data_containers
 
 
-@router.get("/{id}", response_model=FullChartSchema, status_code=200)
+@router.get("/{id}", response_model=ChartFullGetSchema, status_code=200)
 async def get_chart_container(
     id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):
@@ -56,10 +57,10 @@ async def get_chart_container(
     return data_container
 
 
-@router.patch("/{id}", status_code=200)
+@router.patch("/{id}", status_code=201)
 async def patch_data_container(
     id: str,
-    updates: dict,
+    updates: ChartFullPostSchema,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):

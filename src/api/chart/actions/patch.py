@@ -6,11 +6,14 @@ from src.api.data.actions.get import _get_data_container
 from src.database.models.chart_model.dals import ChartDAL
 from src.database.models.chart_model.tables import ChartModel
 
+from src.api.chart.schemas import ChartFullPostSchema
+
 
 @forbid_account_key
 async def _patch_chart_container(
-    updates: dict, id: UUID, account_id: UUID, db: AsyncSession
+    updates: ChartFullPostSchema, id: UUID, account_id: UUID, db: AsyncSession
 ):
+    updates = updates.model_dump(exclude_unset=True)
     if updates.get("data"):
         await _get_data_container(id=updates.get("data"), account_id=account_id, db=db)
     async with db as session:

@@ -1,5 +1,5 @@
 import fastapi_users
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.account.actions import _get_account, _get_account_or_create
@@ -53,6 +53,8 @@ async def get_data_container(
 ):
     account = await _get_account(user_id=user.id, db=db)
     data_container = await _get_data_container(id=id, account_id=account.id, db=db)
+    if not data_container:
+        raise HTTPException(status_code=404, detail=f"Data not found")
     return data_container
 
 

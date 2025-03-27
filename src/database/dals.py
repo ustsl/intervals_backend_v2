@@ -129,7 +129,7 @@ class AccountBaseDAL(BaseDAL):
             self.model.id == id, self.model.account == account
         )
         db_query_result = await self.db_session.execute(query)
-        obj = db_query_result.scalar_one()
+        obj = db_query_result.scalar_one_or_none()
         return obj
 
     @exception_dal

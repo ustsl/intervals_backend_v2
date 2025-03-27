@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from src.api.chart.schemas import FullChartSchema
+from src.api.chart.schemas import ChartFullGetSchema
 from src.api.data.schemas import FullDataSchema
 from src.api.schemas import PaginateSchemaMixin
 from src.api.widget.schemas import FullWidgetSchema
@@ -24,7 +24,7 @@ class DashboardPostSchema(BaseModel):
 class DashboardChartSchema(BaseModel):
     object_id: UUID
     dashboard_id: UUID
-    chart: FullChartSchema
+    chart: ChartFullGetSchema
 
 
 class DashboardWidgetSchema(BaseModel):
