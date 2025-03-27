@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 from fastapi import HTTPException
@@ -139,23 +140,34 @@ class AccountBaseDAL(BaseDAL):
         page_size: int = 10,
         offset: int = 0,
         order_param="time_update",
+        title: Optional[str] = None,
     ):
+        query = select(self.model).where(self.model.account == account)
+        if title:
+            query = query.where(self.model.title.ilike(f"%{title}%"))
+
         query = (
-            select(self.model)
-            .where(self.model.account == account)
-            .order_by(desc(getattr(self.model, order_param)))
+            query.order_by(desc(getattr(self.model, order_param)))
             .limit(page_size)
             .offset(offset)
         )
+
         db_query_result = await self.db_session.execute(query)
         result = db_query_result.scalars().all()
+
         total_count_query = (
             select(func.count())
             .select_from(self.model)
             .where(self.model.account == account)
         )
+        if title:
+            total_count_query = total_count_query.where(
+                self.model.title.ilike(f"%{title}%")
+            )
+
         total_count_result = await self.db_session.execute(total_count_query)
         total_count = total_count_result.scalar()
+
         return {"containers": result, "total": total_count, "offset": offset}
 
     @exception_dal

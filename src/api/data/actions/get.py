@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import HTTPException
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,8 +16,14 @@ async def _get_data_container(id: str, account_id: UUID, db: AsyncSession):
 
 
 async def _get_data_containers(
-    account_id: UUID, offset: int, db: AsyncSession
+    account_id: UUID,
+    offset: int,
+    db: AsyncSession,
+    title: Optional[str] = None,
 ) -> DataSchema:
     obj_dal = DataDAL(db_session=db, model=DataModel)
-    obj = await obj_dal.list(account=account_id, offset=offset, page_size=5)
+
+    obj = await obj_dal.list(
+        account=account_id, offset=offset, page_size=5, title=title
+    )
     return obj

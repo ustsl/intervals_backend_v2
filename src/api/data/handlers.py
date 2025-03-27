@@ -1,3 +1,4 @@
+from typing import Optional
 import fastapi_users
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -37,13 +38,15 @@ async def post_data_container(
 
 @router.get("/", response_model=PaginatedDataSchema, status_code=200)
 async def get_data_containers(
-    offset: str = 0, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    offset: int = 0,
+    title: Optional[str] = None,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
     data_containers = await _get_data_containers(
-        account_id=account.id, offset=offset, db=db
+        account_id=account.id, offset=offset, title=title, db=db
     )
-
     return data_containers
 
 
