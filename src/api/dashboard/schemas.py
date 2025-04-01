@@ -33,10 +33,20 @@ class DashboardWidgetSchema(BaseModel):
     widget: FullWidgetSchema
 
 
-class DashboardDetailSchema(DashboardSchema):
-    settings: object = None
-    charts: Optional[List[DashboardChartSchema]] = None
-    widgets: Optional[List[DashboardWidgetSchema]] = None
+class DashboardWidgetList(FullWidgetSchema):
+    ordering: int
+
+
+class DashboardChartList(ChartFullGetSchema):
+    ordering: int
+
+
+class DashboardDetailSchema(BaseModel):
+    id: UUID
+    title: str
+    time_update: datetime
+    charts: Optional[List[DashboardChartList]] = None
+    widgets: Optional[List[DashboardWidgetList]] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -48,3 +58,4 @@ class PaginateDashboardSchema(PaginateSchemaMixin):
 class RelationPostSchema(BaseModel):
     dashboard_id: UUID
     object_id: UUID
+    ordering: int

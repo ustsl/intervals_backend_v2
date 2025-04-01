@@ -1,6 +1,7 @@
+from typing import Any, Dict
 from uuid import UUID
 
-from sqlalchemy import delete
+from sqlalchemy import delete, text
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -11,32 +12,112 @@ from src.database.models.dashboard_model.tables import DashboardChart, Dashboard
 from src.database.models.widget_model.tables import WidgetModel
 from src.database.utils import exception_dal
 
+from sqlalchemy import text
+from typing import Any, Dict
+from uuid import UUID
+
 
 class DashboardDAL(AccountBaseDAL):
 
     @exception_dal
-    async def get(self, id: str, account: UUID):
-        query = (
-            select(self.model)
-            .options(
-                selectinload(self.model.charts)
-                .joinedload(DashboardChart.chart)
-                .joinedload(ChartModel.data_relation),
-                selectinload(self.model.widgets)
-                .joinedload(DashboardWidget.widget)
-                .joinedload(WidgetModel.data_relation),
-            )
-            .where(self.model.id == id, self.model.account == account)
+    async def get(self, dashboard_id: str, account_id: UUID) -> Dict[str, Any]:
+        # Запрос для получения информации по дашборду
+        dashboard_sql = text(
+            """
+            SELECT id, title, time_update
+            FROM dashboard
+            WHERE id = :dashboard_id AND account = :account
+        """
         )
-        db_query_result = await self.db_session.execute(query)
+        dashboard_result = await self.db_session.execute(
+            dashboard_sql, {"dashboard_id": dashboard_id, "account": str(account_id)}
+        )
+        dashboard_row = dashboard_result.fetchone()
+        if not dashboard_row:
+            return {}  # Если дашборд не найден, возвращаем пустой словарь
 
-        try:
-            return db_query_result.scalar_one()
-        except NoResultFound:
-            return None
+        dashboard = dict(dashboard_row._mapping)
+
+        # Запрос для получения связанных чартов
+        charts_sql = text(
+            """
+            SELECT 
+                c.id, 
+                c.title, 
+                c.data, 
+                dt.time_update, 
+                dt.container as data_relation, 
+                c.settings, 
+                d.ordering
+            FROM dashboard_chart AS d
+            LEFT JOIN chart AS c ON c.id = d.object_id
+            LEFT JOIN data AS dt ON c.data = dt.id
+            WHERE d.dashboard_id = :dashboard_id
+            ORDER BY d.ordering
+        """
+        )
+        charts_result = await self.db_session.execute(
+            charts_sql, {"dashboard_id": dashboard_id, "account": str(account_id)}
+        )
+        charts = [dict(row._mapping) for row in charts_result.fetchall()]
+
+        # Запрос для получения связанных виджетов
+        widgets_sql = text(
+            """
+            SELECT 
+                w.id, 
+                w.title, 
+                w.data, 
+                dt.time_update, 
+                dt.container as data_relation, 
+                d.ordering, 
+                w.data_column, 
+                w.offset_for_comparison, 
+                w.account
+            FROM dashboard_widget AS d
+            LEFT JOIN widget AS w ON w.id = d.object_id
+            LEFT JOIN data AS dt ON w.data = dt.id
+            WHERE d.dashboard_id = :dashboard_id AND w.account = :account
+            ORDER BY d.ordering
+        """
+        )
+        widgets_result = await self.db_session.execute(
+            widgets_sql, {"dashboard_id": dashboard_id, "account": str(account_id)}
+        )
+        widgets = [dict(row._mapping) for row in widgets_result.fetchall()]
+
+        # Формируем итоговый словарь с результатами
+        result = {
+            **dashboard,
+            "charts": charts,
+            "widgets": widgets,
+        }
+        return result
 
 
 class DashboardRelationDAL(AccountBaseDAL):
+
+    @exception_dal
+    async def change_or_create(self, dashboard_id, object_id, ordering):
+        query = select(self.model).filter_by(
+            dashboard_id=dashboard_id, object_id=object_id
+        )
+        result = await self.db_session.execute(query)
+        instance = result.scalars().first()
+
+        if instance:
+            instance.ordering = ordering
+        else:
+            instance = self.model(
+                dashboard_id=dashboard_id,
+                object_id=object_id,
+                ordering=ordering,
+            )
+            self.db_session.add(instance)
+
+        await self.db_session.flush()
+        await self.db_session.commit()
+        return instance
 
     @exception_dal
     async def get(self, dashboard_id: UUID, object_id: UUID):

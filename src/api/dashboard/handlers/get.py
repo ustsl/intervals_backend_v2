@@ -27,7 +27,7 @@ async def get_dashboards(
     return data_containers
 
 
-@router.get("/{id}", response_model=DashboardDetailSchema, status_code=200)
+@router.get("/{id}", status_code=200)
 async def get_dashboard(
     id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):

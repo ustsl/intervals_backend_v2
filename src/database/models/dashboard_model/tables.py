@@ -1,7 +1,6 @@
 import uuid
 
-from sqlalchemy import (JSON, CheckConstraint, Column, ForeignKey, Integer,
-                        String)
+from sqlalchemy import JSON, CheckConstraint, Column, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -23,6 +22,8 @@ class DashboardChart(Base, DashboardObjectMixin):
     )
     object_id = Column(UUID(as_uuid=True), ForeignKey("chart.id"), primary_key=True)
 
+    ordering = Column(Integer, nullable=True, default=0)
+
     dashboard = relationship("DashboardModel", back_populates="charts")
     chart = relationship("ChartModel", back_populates="dashboard_charts")
 
@@ -34,6 +35,8 @@ class DashboardWidget(Base, DashboardObjectMixin):
         UUID(as_uuid=True), ForeignKey("dashboard.id"), primary_key=True
     )
     object_id = Column(UUID(as_uuid=True), ForeignKey("widget.id"), primary_key=True)
+
+    ordering = Column(Integer, nullable=True, default=0)
 
     dashboard = relationship("DashboardModel", back_populates="widgets")
     widget = relationship("WidgetModel", back_populates="dashboard_widgets")
