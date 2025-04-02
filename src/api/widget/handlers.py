@@ -36,7 +36,7 @@ async def post_widget_container(
     return widget_container
 
 
-@router.get("/widgets", response_model=PaginateWidgetSchema, status_code=200)
+@router.get("/", response_model=PaginateWidgetSchema, status_code=200)
 async def get_widget_containers(
     offset: int = 0,
     title: Optional[str] = None,
