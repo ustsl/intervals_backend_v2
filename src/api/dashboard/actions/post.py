@@ -30,6 +30,32 @@ async def _create_dashboard(title: str, account_id: UUID, db: AsyncSession):
         return serialized_result
 
 
+async def _force_delete_chart_to_dashboard(
+    dashboard_id: UUID,
+    account_id: UUID,
+    db: AsyncSession,
+):
+    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+
+    async with db as session:
+        obj_dal = DashboardRelationDAL(db_session=session, model=DashboardChart)
+        result = await obj_dal.force_delete(dashboard_id=dashboard_id)
+        return result
+
+
+async def _force_delete_widget_to_dashboard(
+    dashboard_id: UUID,
+    account_id: UUID,
+    db: AsyncSession,
+):
+    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+
+    async with db as session:
+        obj_dal = DashboardRelationDAL(db_session=session, model=DashboardWidget)
+        result = await obj_dal.force_delete(dashboard_id=dashboard_id)
+        return result
+
+
 async def _relate_chart_to_dashboard(
     object_id: UUID,
     dashboard_id: UUID,

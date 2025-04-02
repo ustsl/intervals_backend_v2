@@ -4,13 +4,17 @@ from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.chart.actions.get import _get_chart_container
-from src.api.dashboard.actions.get import _get_dashboard_relation
+from src.api.dashboard.actions.get import (
+    _get_dashboard_container,
+    _get_dashboard_relation,
+)
 from src.api.widget.actions.get import _get_widget_container
-from src.database.models.dashboard_model.dals import (DashboardDAL,
-                                                      DashboardRelationDAL)
-from src.database.models.dashboard_model.tables import (DashboardChart,
-                                                        DashboardModel,
-                                                        DashboardWidget)
+from src.database.models.dashboard_model.dals import DashboardDAL, DashboardRelationDAL
+from src.database.models.dashboard_model.tables import (
+    DashboardChart,
+    DashboardModel,
+    DashboardWidget,
+)
 
 
 async def _delete_dashboard_relation(
@@ -46,4 +50,30 @@ async def _delete_dashboard_container(id: UUID, account_id: UUID, db: AsyncSessi
     async with db as session:
         obj_dal = DashboardDAL(db_session=session, model=DashboardModel)
         result = await obj_dal.delete(id=id, account=account_id)
+        return result
+
+
+async def _force_delete_chart_to_dashboard(
+    dashboard_id: UUID,
+    account_id: UUID,
+    db: AsyncSession,
+):
+    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+
+    async with db as session:
+        obj_dal = DashboardRelationDAL(db_session=session, model=DashboardChart)
+        result = await obj_dal.force_delete(dashboard_id=dashboard_id)
+        return result
+
+
+async def _force_delete_widget_to_dashboard(
+    dashboard_id: UUID,
+    account_id: UUID,
+    db: AsyncSession,
+):
+    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+
+    async with db as session:
+        obj_dal = DashboardRelationDAL(db_session=session, model=DashboardWidget)
+        result = await obj_dal.force_delete(dashboard_id=dashboard_id)
         return result

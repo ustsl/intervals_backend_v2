@@ -129,6 +129,19 @@ class DashboardRelationDAL(AccountBaseDAL):
         return obj
 
     @exception_dal
+    async def force_delete(self, dashboard_id: UUID):
+        try:
+            query = delete(self.model).where(
+                self.model.dashboard_id == dashboard_id,
+            )
+            await self.db_session.execute(query)
+            await self.db_session.commit()
+            return {"success": "Obj deleted successfully"}
+        except Exception as e:
+            await self.db_session.rollback()
+            return {"error": f"Error deleting: {str(e)}"}
+
+    @exception_dal
     async def delete(self, dashboard_id: UUID, object_id: UUID):
         try:
             query = delete(self.model).where(

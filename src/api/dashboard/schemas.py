@@ -55,7 +55,16 @@ class PaginateDashboardSchema(PaginateSchemaMixin):
     containers: List[DashboardSchema]
 
 
-class RelationPostSchema(BaseModel):
-    dashboard_id: UUID
+class RelationPostShortSchema(BaseModel):
     object_id: UUID
     ordering: int
+
+
+class RelationPostSchema(RelationPostShortSchema):
+    dashboard_id: UUID
+
+
+class DashboardPatchSchema(BaseModel):
+    title: str = None
+    charts: Optional[List[RelationPostShortSchema]] = None
+    widgets: Optional[List[RelationPostShortSchema]] = None
