@@ -5,8 +5,7 @@ from src.api.chart.actions.get import _get_chart_container
 from src.api.dashboard.actions.get import _get_dashboard_container
 from src.api.dashboard.schemas import DashboardSchema
 from src.api.widget.actions.get import _get_widget_container
-from src.database.models.chart_model.dals import ChartDAL
-from src.database.models.chart_model.tables import ChartModel
+
 from src.database.models.dashboard_model.dals import DashboardDAL, DashboardRelationDAL
 from src.database.models.dashboard_model.tables import (
     DashboardChart,
@@ -28,32 +27,6 @@ async def _create_dashboard(title: str, account_id: UUID, db: AsyncSession):
             time_update=result.time_update,
         )
         return serialized_result
-
-
-async def _force_delete_chart_to_dashboard(
-    dashboard_id: UUID,
-    account_id: UUID,
-    db: AsyncSession,
-):
-    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
-
-    async with db as session:
-        obj_dal = DashboardRelationDAL(db_session=session, model=DashboardChart)
-        result = await obj_dal.force_delete(dashboard_id=dashboard_id)
-        return result
-
-
-async def _force_delete_widget_to_dashboard(
-    dashboard_id: UUID,
-    account_id: UUID,
-    db: AsyncSession,
-):
-    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
-
-    async with db as session:
-        obj_dal = DashboardRelationDAL(db_session=session, model=DashboardWidget)
-        result = await obj_dal.force_delete(dashboard_id=dashboard_id)
-        return result
 
 
 async def _relate_chart_to_dashboard(
