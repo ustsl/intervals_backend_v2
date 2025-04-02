@@ -46,7 +46,7 @@ class DashboardDAL(AccountBaseDAL):
                 c.title, 
                 c.data, 
                 dt.time_update, 
-                dt.container as data_relation, 
+                dt.container, 
                 c.settings, 
                 d.ordering
             FROM dashboard_chart AS d
@@ -69,7 +69,7 @@ class DashboardDAL(AccountBaseDAL):
                 w.title, 
                 w.data, 
                 dt.time_update, 
-                dt.container as data_relation, 
+                dt.container, 
                 d.ordering, 
                 w.data_column, 
                 w.offset_for_comparison, 

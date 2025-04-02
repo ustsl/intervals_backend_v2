@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -30,8 +30,7 @@ class WidgetDataSchema(BaseModel):
 
 
 class FullWidgetSchema(WidgetDataSchema, WidgetSchema):
-
-    data_relation: Optional[FullDataSchema] = None
+    container: Optional[List[Dict[str, Any]]] = None
 
 
 class WidgetPostSchema(WidgetSchema, WidgetDataSchema):

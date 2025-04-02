@@ -1,4 +1,4 @@
-from sqlalchemy import UUID, select
+from sqlalchemy import UUID, select, text
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
@@ -13,11 +13,18 @@ from src.database.utils import exception_dal
 class WidgetDAL(AccountBaseDAL):
     @exception_dal
     async def get(self, id: UUID, account: UUID):
-        query = (
-            select(self.model)
-            .options(selectinload(self.model.data_relation))
-            .where(self.model.id == id, self.model.account == account)
+        sql = text(
+            """
+            SELECT 
+                c.id, c.title, c.data, c.data_column, c.offset_for_comparison, c.time_update, dt.container
+            FROM widget AS c
+            LEFT JOIN data AS dt ON dt.id = c.data
+            WHERE c.account = :account AND c.id = :id
+        """
         )
-        db_query_result = await self.db_session.execute(query)
-        obj = db_query_result.scalar_one()
-        return obj
+
+        result = await self.db_session.execute(
+            sql, {"account": str(account), "id": str(id)}
+        )
+        row = result.mappings().one()
+        return dict(row)
