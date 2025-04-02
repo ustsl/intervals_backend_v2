@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,9 +7,13 @@ from src.database.models.widget_model.dals import WidgetDAL
 from src.database.models.widget_model.tables import WidgetModel
 
 
-async def _get_widget_containers(account_id: UUID, offset: int, db: AsyncSession):
+async def _get_widget_containers(
+    account_id: UUID, offset: int, title: Optional[str], db: AsyncSession
+):
     obj_dal = WidgetDAL(db_session=db, model=WidgetModel)
-    obj = await obj_dal.list(account=account_id, offset=offset, page_size=5)
+    obj = await obj_dal.list(
+        account=account_id, offset=offset, page_size=5, title=title
+    )
     return obj
 
 

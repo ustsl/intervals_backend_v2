@@ -1,3 +1,4 @@
+from typing import Optional
 import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -35,13 +36,16 @@ async def post_widget_container(
     return widget_container
 
 
-@router.get("/", response_model=PaginateWidgetSchema, status_code=200)
+@router.get("/widgets", response_model=PaginateWidgetSchema, status_code=200)
 async def get_widget_containers(
-    offset: str = 0, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    offset: int = 0,
+    title: Optional[str] = None,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
     widget_containers = await _get_widget_containers(
-        account_id=account.id, offset=offset, db=db
+        account_id=account.id, offset=offset, title=title, db=db
     )
     return widget_containers
 

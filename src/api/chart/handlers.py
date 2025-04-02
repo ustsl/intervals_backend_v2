@@ -1,3 +1,4 @@
+from typing import Optional
 import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -38,14 +39,16 @@ async def create_chart_container(
 
 @router.get("/", response_model=PaginateChartSchema, status_code=200)
 async def get_chart_containers(
-    offset: str = 0, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    offset: int = 0,
+    title: Optional[str] = None,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
-    data_containers = await _get_chart_containers(
-        account_id=account.id, offset=offset, db=db
+    chart_containers = await _get_chart_containers(
+        account_id=account.id, offset=offset, title=title, db=db
     )
-
-    return data_containers
+    return chart_containers
 
 
 @router.get("/{id}", response_model=ChartFullGetSchema, status_code=200)
