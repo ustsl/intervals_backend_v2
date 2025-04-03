@@ -15,7 +15,7 @@ class WidgetSchemaCreate(BaseModel):
 class WidgetSchema(BaseModel):
     id: uuid.UUID
     title: str
-    time_update: datetime
+    time_update: Optional[datetime] = None
 
 
 class WidgetListSchema(WidgetSchema):
