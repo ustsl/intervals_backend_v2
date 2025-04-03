@@ -1,4 +1,10 @@
-# intervals
+# About:
+
+Open source backend for loading and visualizing data.
+Deploy at https://intervals.ru
+
+The service is completely free. If you need help working with data and creating specialized dashboards, 
+write to telegram https://t.me/ustsl
 
 
 # Path for start:
