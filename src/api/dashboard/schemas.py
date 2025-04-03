@@ -44,7 +44,7 @@ class DashboardChartList(ChartFullGetSchema):
 class DashboardDetailSchema(BaseModel):
     id: UUID
     title: str
-    time_update: datetime
+    time_update: Optional[datetime] = None
     charts: Optional[List[DashboardChartList]] = None
     widgets: Optional[List[DashboardWidgetList]] = None
 

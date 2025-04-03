@@ -20,7 +20,7 @@ class ChartCreateSchema(BaseModel):
 
 class ChartSchema(ChartCreateSchema):
     id: uuid.UUID
-    time_update: datetime
+    time_update: Optional[datetime] = None
 
 
 class PaginateChartSchema(PaginateSchemaMixin):
