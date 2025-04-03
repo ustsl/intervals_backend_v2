@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from uuid import UUID
 
 from sqlalchemy import delete, text
@@ -20,25 +20,34 @@ from uuid import UUID
 class DashboardDAL(AccountBaseDAL):
 
     @exception_dal
-    async def get(self, dashboard_id: str, account_id: UUID) -> Dict[str, Any]:
-        # Запрос для получения информации по дашборду
-        dashboard_sql = text(
-            """
+    async def get_dashboard(
+        self, dashboard_id: UUID, account_id: Optional[UUID] = None
+    ) -> Dict[str, Any]:
+        # Начинаем формирование запроса
+        query = """
             SELECT id, title, time_update
             FROM dashboard
-            WHERE id = :dashboard_id AND account = :account
+            WHERE id = :dashboard_id
         """
-        )
-        dashboard_result = await self.db_session.execute(
-            dashboard_sql, {"dashboard_id": dashboard_id, "account": str(account_id)}
-        )
+        params = {"dashboard_id": dashboard_id}
+
+        # Если account_id передан, добавляем условие в запрос
+        if account_id is not None:
+            query += " AND account = :account"
+            params["account"] = str(account_id)
+
+        dashboard_sql = text(query)
+
+        dashboard_result = await self.db_session.execute(dashboard_sql, params)
         dashboard_row = dashboard_result.fetchone()
         if not dashboard_row:
-            return {}  # Если дашборд не найден, возвращаем пустой словарь
-
+            return {}
         dashboard = dict(dashboard_row._mapping)
+        return dashboard
 
-        # Запрос для получения связанных чартов
+    @exception_dal
+    async def get_dashboard_charts(self, dashboard_id: str) -> Dict[str, Any]:
+
         charts_sql = text(
             """
             SELECT 
@@ -57,10 +66,13 @@ class DashboardDAL(AccountBaseDAL):
         """
         )
         charts_result = await self.db_session.execute(
-            charts_sql, {"dashboard_id": dashboard_id, "account": str(account_id)}
+            charts_sql, {"dashboard_id": dashboard_id}
         )
         charts = [dict(row._mapping) for row in charts_result.fetchall()]
+        return charts
 
+    @exception_dal
+    async def get_dashboard_widgets(self, dashboard_id: str) -> Dict[str, Any]:
         # Запрос для получения связанных виджетов
         widgets_sql = text(
             """
@@ -77,22 +89,15 @@ class DashboardDAL(AccountBaseDAL):
             FROM dashboard_widget AS d
             LEFT JOIN widget AS w ON w.id = d.object_id
             LEFT JOIN data AS dt ON w.data = dt.id
-            WHERE d.dashboard_id = :dashboard_id AND w.account = :account
+            WHERE d.dashboard_id = :dashboard_id
             ORDER BY d.ordering
         """
         )
         widgets_result = await self.db_session.execute(
-            widgets_sql, {"dashboard_id": dashboard_id, "account": str(account_id)}
+            widgets_sql, {"dashboard_id": dashboard_id}
         )
         widgets = [dict(row._mapping) for row in widgets_result.fetchall()]
-
-        # Формируем итоговый словарь с результатами
-        result = {
-            **dashboard,
-            "charts": charts,
-            "widgets": widgets,
-        }
-        return result
+        return widgets
 
 
 class DashboardRelationDAL(AccountBaseDAL):

@@ -13,10 +13,13 @@ from src.database.utils import exception_dal
 ###########################################################
 
 
-class BaseDAL:
+class DAL:
     def __init__(self, db_session: AsyncSession, model: DeclarativeMeta):
         self.db_session = db_session
         self.model = model
+
+
+class BaseDAL(DAL):
 
     @exception_dal
     async def create(self, **data):
@@ -111,7 +114,7 @@ class BaseDAL:
             return {"error": f"Error updating: {str(e)}"}
 
 
-class AccountBaseDAL(BaseDAL):
+class AccountBaseDAL(DAL):
 
     async def create(self, **kwargs):
         try:

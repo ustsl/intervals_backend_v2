@@ -9,6 +9,7 @@ from src.api.dashboard.handlers.post import router as dashboard_post_router
 from src.api.dashboard.handlers.update import router as dashboard_update_router
 from src.api.data.handlers import router as data_router
 from src.api.widget.handlers import router as widget_router
+from src.api.temporary_link.handlers import router as tmp_router
 
 # create the instance for the routes
 main_api_router = APIRouter()
@@ -31,3 +32,4 @@ main_api_router.include_router(account_router, prefix="/account", tags=["account
 main_api_router.include_router(data_router, prefix="/data", tags=["data"])
 main_api_router.include_router(chart_router, prefix="/chart", tags=["chart"])
 main_api_router.include_router(widget_router, prefix="/widget", tags=["widget"])
+main_api_router.include_router(tmp_router, prefix="/tmp", tags=["tmp"])
