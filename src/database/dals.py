@@ -20,7 +20,6 @@ class DAL:
 
 
 class BaseDAL(DAL):
-
     @exception_dal
     async def create(self, **data):
         try:
@@ -115,7 +114,6 @@ class BaseDAL(DAL):
 
 
 class AccountBaseDAL(DAL):
-
     async def create(self, **kwargs):
         try:
             obj = self.model(**kwargs)

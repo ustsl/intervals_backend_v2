@@ -10,7 +10,6 @@ from src.database.utils import exception_dal, exception_soft_dal
 
 
 class AccountDAL(BaseDAL):
-
     @exception_soft_dal
     async def get_with_user_id(self, user_id: int):
         query = select(self.model).where(self.model.user == user_id)

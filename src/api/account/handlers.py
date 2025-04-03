@@ -14,6 +14,5 @@ current_user = fastapi_users.current_user()
 
 @router.get("/", response_model=AccountSchema)
 async def get_account(user=Depends(current_user), db: AsyncSession = Depends(get_db)):
-
     result = await _get_account_or_create(user_id=user.id, db=db)
     return result

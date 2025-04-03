@@ -8,8 +8,8 @@ from src.api.dashboard.handlers.get import router as dashboard_get_router
 from src.api.dashboard.handlers.post import router as dashboard_post_router
 from src.api.dashboard.handlers.update import router as dashboard_update_router
 from src.api.data.handlers import router as data_router
-from src.api.widget.handlers import router as widget_router
 from src.api.temporary_link.handlers import router as tmp_router
+from src.api.widget.handlers import router as widget_router
 
 # create the instance for the routes
 main_api_router = APIRouter()

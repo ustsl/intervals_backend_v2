@@ -1,4 +1,5 @@
 from typing import Optional
+
 from fastapi import HTTPException
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession

@@ -1,18 +1,17 @@
 from typing import Optional
+
 import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.account.actions import _get_account, _get_account_or_create
+from src.api.auth.handlers import fastapi_users
+from src.api.dashboard.actions.get import _get_dashboard, _get_dashboard_container
+from src.api.data.actions.get import _get_data_containers
+from src.api.data.schemas import PaginatedDataSchema
 from src.api.temporary_link.actions import (
     _create_or_update_tmp_link,
     _get_dashboard_with_link,
-)
-from src.api.dashboard.actions.get import _get_dashboard, _get_dashboard_container
-from src.api.account.actions import _get_account, _get_account_or_create
-from src.api.auth.handlers import fastapi_users
-from src.api.data.actions.get import _get_data_containers
-from src.api.data.schemas import (
-    PaginatedDataSchema,
 )
 from src.database.session import get_db
 

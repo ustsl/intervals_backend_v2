@@ -25,7 +25,6 @@ async def _get_dashboard_container(id: str, account_id: UUID, db: AsyncSession):
         raise HTTPException(status_code=404, detail=f"Dashboard not found")
     charts = await obj_dal.get_dashboard_charts(dashboard_id=id)
     widgets = await obj_dal.get_dashboard_widgets(dashboard_id=id)
-
     result = {
         **dashboard,
         "charts": charts,

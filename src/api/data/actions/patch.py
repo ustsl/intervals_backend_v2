@@ -1,10 +1,10 @@
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.utils import forbid_account_key
 from src.api.data.schemas import DataSchema
 from src.database.models.data_model.dals import DataDAL
 from src.database.models.data_model.tables import DataModel
+from src.database.utils import forbid_account_key
 
 
 @forbid_account_key

@@ -1,10 +1,10 @@
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.utils import forbid_account_key
 from src.api.data.actions.get import _get_data_container
 from src.database.models.widget_model.dals import WidgetDAL
 from src.database.models.widget_model.tables import WidgetModel
+from src.database.utils import forbid_account_key
 
 
 @forbid_account_key

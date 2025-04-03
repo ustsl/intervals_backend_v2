@@ -23,9 +23,9 @@ from src.database.models.dashboard_model.tables import (
     DashboardWidget,
 )
 from src.database.models.data_model.tables import DataModel
+from src.database.models.temporary_link_model.tables import TemporaryLinkModel
 from src.database.models.user_model.tables import UserModel
 from src.database.models.widget_model.tables import WidgetModel
-from src.database.models.temporary_link_model.tables import TemporaryLinkModel
 
 target_metadata = Base.metadata
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"

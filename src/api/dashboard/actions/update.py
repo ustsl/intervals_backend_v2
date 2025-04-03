@@ -2,9 +2,9 @@ from fastapi import HTTPException
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.utils import forbid_account_key
 from src.database.models.dashboard_model.dals import DashboardDAL
 from src.database.models.dashboard_model.tables import DashboardModel
+from src.database.utils import forbid_account_key
 
 
 @forbid_account_key

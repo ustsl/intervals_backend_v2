@@ -2,6 +2,8 @@ import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.api.account.actions import _get_account
+from src.api.auth.handlers import fastapi_users
 from src.api.dashboard.actions.delete import (
     _force_delete_chart_to_dashboard,
     _force_delete_widget_to_dashboard,
@@ -11,10 +13,8 @@ from src.api.dashboard.actions.post import (
     _relate_chart_to_dashboard,
     _relate_widget_to_dashboard,
 )
-from src.api.account.actions import _get_account
-from src.api.auth.handlers import fastapi_users
 from src.api.dashboard.actions.update import _patch_dashboard_container
-from src.api.dashboard.schemas import DashboardSchema, DashboardPatchSchema
+from src.api.dashboard.schemas import DashboardPatchSchema, DashboardSchema
 from src.database.session import get_db
 
 router = APIRouter()
@@ -29,7 +29,6 @@ async def update_dashboard(
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
-
     charts = updates.charts
     widgets = updates.widgets
     title = updates.title

@@ -2,23 +2,13 @@ from typing import Any, Dict, Optional
 from uuid import UUID
 
 from sqlalchemy import delete, text
-from sqlalchemy.exc import NoResultFound
 from sqlalchemy.future import select
-from sqlalchemy.orm import selectinload
 
 from src.database.dals import AccountBaseDAL
-from src.database.models.chart_model.tables import ChartModel
-from src.database.models.dashboard_model.tables import DashboardChart, DashboardWidget
-from src.database.models.widget_model.tables import WidgetModel
 from src.database.utils import exception_dal
-
-from sqlalchemy import text
-from typing import Any, Dict
-from uuid import UUID
 
 
 class DashboardDAL(AccountBaseDAL):
-
     @exception_dal
     async def get_dashboard(
         self, dashboard_id: UUID, account_id: Optional[UUID] = None
@@ -47,7 +37,6 @@ class DashboardDAL(AccountBaseDAL):
 
     @exception_dal
     async def get_dashboard_charts(self, dashboard_id: str) -> Dict[str, Any]:
-
         charts_sql = text(
             """
             SELECT 
@@ -101,7 +90,6 @@ class DashboardDAL(AccountBaseDAL):
 
 
 class DashboardRelationDAL(AccountBaseDAL):
-
     @exception_dal
     async def change_or_create(self, dashboard_id, object_id, ordering):
         query = select(self.model).filter_by(

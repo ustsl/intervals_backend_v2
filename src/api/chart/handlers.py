@@ -1,4 +1,5 @@
 from typing import Optional
+
 import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,10 +12,10 @@ from src.api.chart.actions.patch import _patch_chart_container
 from src.api.chart.actions.post import _create_chart_container
 from src.api.chart.schemas import (
     ChartCreateSchema,
-    ChartSchema,
-    PaginateChartSchema,
     ChartFullGetSchema,
     ChartFullPostSchema,
+    ChartSchema,
+    PaginateChartSchema,
 )
 from src.database.session import get_db
 
@@ -29,7 +30,6 @@ async def create_chart_container(
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
-
     account = await _get_account_or_create(user_id=user.id, db=db)
     chart_container = await _create_chart_container(
         title=body.title, account_id=account.id, db=db

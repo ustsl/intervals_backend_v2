@@ -24,7 +24,6 @@ async def _delete_dashboard_relation(
     content: Literal["chart", "widget"],
     db: AsyncSession,
 ):
-
     await _get_dashboard_relation(
         dashboard_id=dashboard_id,
         object_id=object_id,

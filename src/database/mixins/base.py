@@ -2,7 +2,6 @@ from sqlalchemy import Boolean, Column, DateTime, func
 
 
 class MaintenanceModel:
-
     __abstract__ = True
 
     is_active = Column(Boolean(), default=True, nullable=False)
@@ -10,7 +9,6 @@ class MaintenanceModel:
 
 
 class TimeModel:
-
     __abstract__ = True
 
     time_create = Column(DateTime(timezone=True), default=func.now())

@@ -1,4 +1,5 @@
 from typing import Optional
+
 import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession

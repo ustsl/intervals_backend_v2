@@ -1,14 +1,14 @@
-from datetime import datetime, timedelta
 import uuid
+from datetime import datetime, timedelta
+
 from fastapi import HTTPException
 from sqlalchemy import text
+
 from src.database.dals import DAL
 
 
 class TemporaryLinkDAL(DAL):
-
     async def create_or_update(self, dashboard_id: uuid.UUID):
-
         new_secret = uuid.uuid4()
         new_available_until = datetime.now() + timedelta(days=1)
 

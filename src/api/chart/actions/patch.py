@@ -1,12 +1,11 @@
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.utils import forbid_account_key
+from src.api.chart.schemas import ChartFullPostSchema
 from src.api.data.actions.get import _get_data_container
 from src.database.models.chart_model.dals import ChartDAL
 from src.database.models.chart_model.tables import ChartModel
-
-from src.api.chart.schemas import ChartFullPostSchema
+from src.database.utils import forbid_account_key
 
 
 @forbid_account_key
