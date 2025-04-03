@@ -1,3 +1,4 @@
+from uuid import UUID
 import fastapi_users
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -27,10 +28,12 @@ async def get_dashboards(
     return data_containers
 
 
-@router.get("/{id}", status_code=200)
+@router.get("/{dashboard_id}", status_code=200, response_model=DashboardDetailSchema)
 async def get_dashboard(
-    id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    dashboard_id: UUID, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):
     account = await _get_account(user_id=user.id, db=db)
-    dashboard = await _get_dashboard_container(id=id, account_id=account.id, db=db)
+    dashboard = await _get_dashboard_container(
+        dashboard_id=dashboard_id, account_id=account.id, db=db
+    )
     return dashboard
