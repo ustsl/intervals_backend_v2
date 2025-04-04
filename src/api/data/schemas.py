@@ -32,9 +32,9 @@ class DataPatchSchema(BaseModel):
     container: Optional[List[Dict[str, Any]]] = None
     info: Optional[str] = None
 
-    @model_validator(pre=True)
+    @model_validator(mode="before")
     def check_container_length(cls, values):
         container = values.get("container")
-        if container and len(container) > 2000:
-            values["container"] = container[:2000]
+        if container and len(container) > 1000:
+            values["container"] = container[:1000]
         return values
