@@ -24,19 +24,6 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.post("/", status_code=201, response_model=DataSchema)
-async def post_data_container(
-    body: DataCreateSchema,
-    user=Depends(current_user),
-    db: AsyncSession = Depends(get_db),
-):
-    account = await _get_account_or_create(user_id=user.id, db=db)
-    data_container = await _create_data_container(
-        title=body.title, account_id=account.id, db=db
-    )
-    return data_container
-
-
 @router.get("/", response_model=PaginatedDataSchema, status_code=200)
 async def get_data_containers(
     offset: int = 0,
@@ -59,6 +46,19 @@ async def get_data_container(
     data_container = await _get_data_container(id=data_id, account_id=account.id, db=db)
     if not data_container:
         raise HTTPException(status_code=404, detail=f"Data not found")
+    return data_container
+
+
+@router.post("/", status_code=201, response_model=DataSchema)
+async def post_data_container(
+    body: DataCreateSchema,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    account = await _get_account_or_create(user_id=user.id, db=db)
+    data_container = await _create_data_container(
+        title=body.title, account_id=account.id, db=db
+    )
     return data_container
 
 

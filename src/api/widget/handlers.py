@@ -24,19 +24,6 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.post("/", status_code=201, response_model=WidgetSchema)
-async def post_widget_container(
-    body: WidgetSchemaCreate,
-    user=Depends(current_user),
-    db: AsyncSession = Depends(get_db),
-):
-    account = await _get_account_or_create(user_id=user.id, db=db)
-    widget_container = await _create_widget_container(
-        title=body.title, account_id=account.id, db=db
-    )
-    return widget_container
-
-
 @router.get("/", response_model=PaginateWidgetSchema, status_code=200)
 async def get_widget_containers(
     offset: int = 0,
@@ -58,6 +45,19 @@ async def get_widget_container(
     account = await _get_account(user_id=user.id, db=db)
     widget_container = await _get_widget_container(
         id=widget_id, account_id=account.id, db=db
+    )
+    return widget_container
+
+
+@router.post("/", status_code=201, response_model=WidgetSchema)
+async def post_widget_container(
+    body: WidgetSchemaCreate,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    account = await _get_account_or_create(user_id=user.id, db=db)
+    widget_container = await _create_widget_container(
+        title=body.title, account_id=account.id, db=db
     )
     return widget_container
 

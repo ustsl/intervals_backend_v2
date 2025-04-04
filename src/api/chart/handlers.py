@@ -24,19 +24,6 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.post("/", status_code=201, response_model=ChartSchema)
-async def create_chart_container(
-    body: ChartCreateSchema,
-    user=Depends(current_user),
-    db: AsyncSession = Depends(get_db),
-):
-    account = await _get_account_or_create(user_id=user.id, db=db)
-    chart_container = await _create_chart_container(
-        title=body.title, account_id=account.id, db=db
-    )
-    return chart_container
-
-
 @router.get("/", response_model=PaginateChartSchema, status_code=200)
 async def get_chart_containers(
     offset: int = 0,
@@ -60,6 +47,19 @@ async def get_chart_container(
         id=chart_id, account_id=account.id, db=db
     )
     return data_container
+
+
+@router.post("/", status_code=201, response_model=ChartSchema)
+async def create_chart_container(
+    body: ChartCreateSchema,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    account = await _get_account_or_create(user_id=user.id, db=db)
+    chart_container = await _create_chart_container(
+        title=body.title, account_id=account.id, db=db
+    )
+    return chart_container
 
 
 @router.patch("/{chart_id}", status_code=201)

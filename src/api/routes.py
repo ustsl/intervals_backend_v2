@@ -22,10 +22,10 @@ main_api_router.include_router(
     dashboard_post_router, prefix="/dashboard", tags=["dashboard"]
 )
 main_api_router.include_router(
-    dashboard_delete_router, prefix="/dashboard", tags=["dashboard"]
+    dashboard_update_router, prefix="/dashboard", tags=["dashboard"]
 )
 main_api_router.include_router(
-    dashboard_update_router, prefix="/dashboard", tags=["dashboard"]
+    dashboard_delete_router, prefix="/dashboard", tags=["dashboard"]
 )
 
 main_api_router.include_router(data_router, prefix="/data", tags=["data"])
