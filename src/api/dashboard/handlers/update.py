@@ -22,9 +22,9 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.patch("/{id}", status_code=201)
+@router.patch("/{dashboard_id}", status_code=201)
 async def update_dashboard(
-    id: str,
+    dashboard_id: str,
     updates: DashboardPatchSchema,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
@@ -37,17 +37,17 @@ async def update_dashboard(
 
     if title:
         await _patch_dashboard_container(
-            id=id, account_id=account.id, title=updates.title, db=db
+            id=dashboard_id, account_id=account.id, title=updates.title, db=db
         )
 
     if widgets:
         await _force_delete_widget_to_dashboard(
-            dashboard_id=id, account_id=account.id, db=db
+            dashboard_id=dashboard_id, account_id=account.id, db=db
         )
         for item in widgets:
             await _relate_widget_to_dashboard(
                 object_id=item.object_id,
-                dashboard_id=id,
+                dashboard_id=dashboard_id,
                 ordering=item.ordering,
                 account_id=account.id,
                 db=db,
@@ -55,12 +55,12 @@ async def update_dashboard(
 
     if charts:
         await _force_delete_chart_to_dashboard(
-            dashboard_id=id, account_id=account.id, db=db
+            dashboard_id=dashboard_id, account_id=account.id, db=db
         )
         for item in charts:
             await _relate_chart_to_dashboard(
                 object_id=item.object_id,
-                dashboard_id=id,
+                dashboard_id=dashboard_id,
                 ordering=item.ordering,
                 account_id=account.id,
                 db=db,

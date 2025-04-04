@@ -51,35 +51,39 @@ async def get_chart_containers(
     return chart_containers
 
 
-@router.get("/{id}", response_model=ChartFullGetSchema, status_code=200)
+@router.get("/{chart_id}", response_model=ChartFullGetSchema, status_code=200)
 async def get_chart_container(
-    id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    chart_id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):
     account = await _get_account(user_id=user.id, db=db)
-    data_container = await _get_chart_container(id=id, account_id=account.id, db=db)
+    data_container = await _get_chart_container(
+        id=chart_id, account_id=account.id, db=db
+    )
     return data_container
 
 
-@router.patch("/{id}", status_code=201)
+@router.patch("/{chart_id}", status_code=201)
 async def patch_data_container(
-    id: str,
+    chart_id: str,
     updates: ChartFullPostSchema,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
     result = await _patch_chart_container(
-        id=id, account_id=account.id, updates=updates, db=db
+        id=chart_id, account_id=account.id, updates=updates, db=db
     )
     return result
 
 
-@router.delete("/{id}", status_code=200)
+@router.delete("/{chart_id}", status_code=200)
 async def delete_chart_container(
-    id: str,
+    chart_id: str,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
-    delete = await _delete_chart_container(data_id=id, account_id=account.id, db=db)
+    delete = await _delete_chart_container(
+        data_id=chart_id, account_id=account.id, db=db
+    )
     return delete

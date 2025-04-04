@@ -1,7 +1,7 @@
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.data.schemas import DataSchema
+from src.api.data.schemas import DataPatchSchema
 from src.database.models.data_model.dals import DataDAL
 from src.database.models.data_model.tables import DataModel
 from src.database.utils import forbid_account_key
@@ -9,8 +9,9 @@ from src.database.utils import forbid_account_key
 
 @forbid_account_key
 async def _patch_data_container(
-    updates: dict, id: UUID, account_id: UUID, db: AsyncSession
+    updates: DataPatchSchema, id: UUID, account_id: UUID, db: AsyncSession
 ):
+    updates = updates.model_dump()
     async with db as session:
         obj_dal = DataDAL(db_session=session, model=DataModel)
         result = await obj_dal.update(id=id, account=account_id, **updates)

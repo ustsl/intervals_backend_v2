@@ -1,6 +1,5 @@
 from fastapi.routing import APIRouter
 
-from src.api.account.handlers import router as account_router
 from src.api.auth.handlers import router as auth_router
 from src.api.chart.handlers import router as chart_router
 from src.api.dashboard.handlers.delete import router as dashboard_delete_router
@@ -28,7 +27,7 @@ main_api_router.include_router(
 main_api_router.include_router(
     dashboard_update_router, prefix="/dashboard", tags=["dashboard"]
 )
-main_api_router.include_router(account_router, prefix="/account", tags=["account"])
+
 main_api_router.include_router(data_router, prefix="/data", tags=["data"])
 main_api_router.include_router(chart_router, prefix="/chart", tags=["chart"])
 main_api_router.include_router(widget_router, prefix="/widget", tags=["widget"])

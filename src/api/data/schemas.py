@@ -28,6 +28,6 @@ class PaginatedDataSchema(PaginateSchemaMixin):
 
 
 class DataPatchSchema(BaseModel):
-    title: str
-    container: Dict[str, Any]
-    info: Optional[str] = ""
+    title: Optional[str] = None
+    container: Optional[List[Dict[str, Any]]] = None
+    info: Optional[str] = None

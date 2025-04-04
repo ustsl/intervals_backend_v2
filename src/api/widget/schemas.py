@@ -1,10 +1,8 @@
 import uuid
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field
-
-from src.api.data.schemas import FullDataSchema
+from pydantic import BaseModel
 from src.api.schemas import PaginateSchemaMixin
 
 
@@ -18,15 +16,12 @@ class WidgetSchema(BaseModel):
     time_update: Optional[datetime] = None
 
 
-class WidgetListSchema(WidgetSchema):
-    title: str
-
-
 class WidgetDataSchema(BaseModel):
     title: str
     data: Optional[uuid.UUID] = None
     data_column: Optional[str] = None
     offset_for_comparison: Optional[int] = None
+    is_reversed: Optional[bool] = False
 
 
 class FullWidgetSchema(WidgetDataSchema, WidgetSchema):
@@ -39,4 +34,4 @@ class WidgetPostSchema(WidgetSchema, WidgetDataSchema):
 
 
 class PaginateWidgetSchema(PaginateSchemaMixin):
-    containers: List[WidgetListSchema]
+    containers: List[WidgetSchema]

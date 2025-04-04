@@ -74,7 +74,8 @@ class DashboardDAL(AccountBaseDAL):
                 d.ordering, 
                 w.data_column, 
                 w.offset_for_comparison, 
-                w.account
+                w.account,
+                w.is_reversed
             FROM dashboard_widget AS d
             LEFT JOIN widget AS w ON w.id = d.object_id
             LEFT JOIN data AS dt ON w.data = dt.id

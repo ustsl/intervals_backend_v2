@@ -51,30 +51,32 @@ async def get_widget_containers(
     return widget_containers
 
 
-@router.get("/{id}", response_model=FullWidgetSchema, status_code=200)
+@router.get("/{widget_id}", response_model=FullWidgetSchema, status_code=200)
 async def get_widget_container(
-    id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    widget_id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):
     account = await _get_account(user_id=user.id, db=db)
-    widget_container = await _get_widget_container(id=id, account_id=account.id, db=db)
+    widget_container = await _get_widget_container(
+        id=widget_id, account_id=account.id, db=db
+    )
     return widget_container
 
 
-@router.patch("/{id}", status_code=201)
+@router.patch("/{widget_id}", status_code=201)
 async def patch_widget_container(
-    id: str,
+    widget_id: str,
     updates: dict,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
     result = await _patch_widget_container(
-        id=id, account_id=account.id, updates=updates, db=db
+        id=widget_id, account_id=account.id, updates=updates, db=db
     )
     return result
 
 
-@router.delete("/{id}", status_code=200)
+@router.delete("/{widget_id}", status_code=200)
 async def delete_widget_container(
     id: str,
     user=Depends(current_user),

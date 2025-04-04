@@ -51,37 +51,37 @@ async def get_data_containers(
     return data_containers
 
 
-@router.get("/{id}", response_model=FullDataSchema, status_code=200)
+@router.get("/{data_id}", response_model=FullDataSchema, status_code=200)
 async def get_data_container(
-    id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    data_id: str, user=Depends(current_user), db: AsyncSession = Depends(get_db)
 ):
     account = await _get_account(user_id=user.id, db=db)
-    data_container = await _get_data_container(id=id, account_id=account.id, db=db)
+    data_container = await _get_data_container(id=data_id, account_id=account.id, db=db)
     if not data_container:
         raise HTTPException(status_code=404, detail=f"Data not found")
     return data_container
 
 
-@router.patch("/{id}", status_code=201)
+@router.patch("/{data_id}", status_code=201)
 async def patch_data_container(
-    id: str,
+    data_id: str,
     updates: DataPatchSchema,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
     result = await _patch_data_container(
-        id=id, account_id=account.id, updates=updates, db=db
+        id=data_id, account_id=account.id, updates=updates, db=db
     )
     return result
 
 
-@router.delete("/{id}", status_code=200)
+@router.delete("/{data_id}", status_code=200)
 async def delete_data_container(
-    id: str,
+    data_id: str,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
-    delete = await _delete_data_container(id=id, account_id=account.id, db=db)
+    delete = await _delete_data_container(id=data_id, account_id=account.id, db=db)
     return delete
