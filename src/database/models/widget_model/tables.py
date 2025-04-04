@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -17,6 +17,7 @@ class WidgetModel(Base, TimeModel):
     data = Column(UUID(as_uuid=True), ForeignKey("data.id"), nullable=True)
     data_column = Column(String, nullable=True)
     offset_for_comparison = Column(Integer, nullable=True)
+    is_reversed = Column(Boolean(), default=True)
 
     data_relation = relationship("DataModel", back_populates="widget_relation")
     dashboard_widgets = relationship("DashboardWidget", back_populates="widget")
