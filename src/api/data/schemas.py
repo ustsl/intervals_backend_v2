@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, model_validator
 
 from src.api.schemas import PaginateSchemaMixin
 
@@ -31,3 +31,10 @@ class DataPatchSchema(BaseModel):
     title: Optional[str] = None
     container: Optional[List[Dict[str, Any]]] = None
     info: Optional[str] = None
+
+    @model_validator(pre=True)
+    def check_container_length(cls, values):
+        container = values.get("container")
+        if container and len(container) > 2000:
+            values["container"] = container[:2000]
+        return values
