@@ -56,7 +56,9 @@ async def _relate_widget_to_dashboard(
     db: AsyncSession,
 ):
     await _get_widget_container(id=object_id, account_id=account_id, db=db)
-    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+    await _get_dashboard_container(
+        dashboard_id=dashboard_id, account_id=account_id, db=db
+    )
 
     async with db as session:
         obj_dal = DashboardRelationDAL(db_session=session, model=DashboardWidget)

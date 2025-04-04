@@ -57,7 +57,9 @@ async def _force_delete_chart_to_dashboard(
     account_id: UUID,
     db: AsyncSession,
 ):
-    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+    await _get_dashboard_container(
+        dashboard_id=dashboard_id, account_id=account_id, db=db
+    )
 
     async with db as session:
         obj_dal = DashboardRelationDAL(db_session=session, model=DashboardChart)
@@ -70,7 +72,9 @@ async def _force_delete_widget_to_dashboard(
     account_id: UUID,
     db: AsyncSession,
 ):
-    await _get_dashboard_container(id=dashboard_id, account_id=account_id, db=db)
+    await _get_dashboard_container(
+        dashboard_id=dashboard_id, account_id=account_id, db=db
+    )
 
     async with db as session:
         obj_dal = DashboardRelationDAL(db_session=session, model=DashboardWidget)
