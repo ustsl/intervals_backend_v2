@@ -60,7 +60,7 @@ async def get_widget_container(
     return widget_container
 
 
-@router.patch("/{id}", status_code=200)
+@router.patch("/{id}", status_code=201)
 async def patch_widget_container(
     id: str,
     updates: dict,

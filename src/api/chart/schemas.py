@@ -42,3 +42,4 @@ class ChartFullPostSchema(ChartCreateSchema):
 
 class ChartFullGetSchema(ChartFullPostSchema, ChartSchema):
     container: Optional[List[Dict[str, Any]]] = None
+    info: Optional[str] = ""

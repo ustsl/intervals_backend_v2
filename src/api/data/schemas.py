@@ -20,29 +20,14 @@ class DataSchema(BaseModel):
 class FullDataSchema(DataSchema):
     time_create: datetime
     container: Optional[List[Dict[str, Any]]] = None
+    info: Optional[str] = ""
 
 
 class PaginatedDataSchema(PaginateSchemaMixin):
     containers: List[DataSchema]
 
 
-class DataPostSchema(BaseModel):
+class DataPatchSchema(BaseModel):
     title: str
     container: Dict[str, Any]
-
-    @field_validator("container")
-    def check_container(cls, value):
-        if "data" not in value or not isinstance(value["data"], str):
-            raise ValueError('container must have a key "data" with a string value')
-        return value
-
-
-class DataPostSchema(BaseModel):
-    title: str
-    container: Dict[str, Any]
-
-    @field_validator("container")
-    def check_container(cls, value):
-        if "data" not in value or not isinstance(value["data"], str):
-            raise ValueError('container must have a key "data" with a string value')
-        return value
+    info: Optional[str] = ""

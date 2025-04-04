@@ -13,7 +13,6 @@ class DashboardDAL(AccountBaseDAL):
     async def get_dashboard(
         self, dashboard_id: UUID, account_id: Optional[UUID] = None
     ) -> Dict[str, Any]:
-        # Начинаем формирование запроса
         query = """
             SELECT id, title, time_update
             FROM dashboard
@@ -21,7 +20,6 @@ class DashboardDAL(AccountBaseDAL):
         """
         params = {"dashboard_id": dashboard_id}
 
-        # Если account_id передан, добавляем условие в запрос
         if account_id is not None:
             query += " AND account = :account"
             params["account"] = str(account_id)
@@ -45,6 +43,7 @@ class DashboardDAL(AccountBaseDAL):
                 c.data, 
                 dt.time_update, 
                 dt.container, 
+                dt.info,
                 c.settings, 
                 d.ordering
             FROM dashboard_chart AS d
@@ -71,6 +70,7 @@ class DashboardDAL(AccountBaseDAL):
                 w.data, 
                 dt.time_update, 
                 dt.container, 
+                dt.info,
                 d.ordering, 
                 w.data_column, 
                 w.offset_for_comparison, 

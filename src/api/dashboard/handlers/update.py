@@ -22,7 +22,7 @@ router = APIRouter()
 current_user = fastapi_users.current_user()
 
 
-@router.patch("/{id}", status_code=201)  # , response_model=DashboardSchema)
+@router.patch("/{id}", status_code=201)
 async def update_dashboard(
     id: str,
     updates: DashboardPatchSchema,

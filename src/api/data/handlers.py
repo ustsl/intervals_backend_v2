@@ -12,7 +12,7 @@ from src.api.data.actions.patch import _patch_data_container
 from src.api.data.actions.post import _create_data_container
 from src.api.data.schemas import (
     DataCreateSchema,
-    DataPostSchema,
+    DataPatchSchema,
     DataSchema,
     FullDataSchema,
     PaginatedDataSchema,
@@ -62,10 +62,10 @@ async def get_data_container(
     return data_container
 
 
-@router.patch("/{id}", status_code=200)
+@router.patch("/{id}", status_code=201)
 async def patch_data_container(
     id: str,
-    updates: dict,
+    updates: DataPatchSchema,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):

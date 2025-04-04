@@ -1,11 +1,8 @@
 from typing import Optional
-
-from fastapi import HTTPException
 from sqlalchemy import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.account.actions import _get_account
-from src.api.data.schemas import DataPostSchema, DataSchema, PaginatedDataSchema
+from src.api.data.schemas import DataSchema
 from src.database.models.data_model.dals import DataDAL
 from src.database.models.data_model.tables import DataModel
 

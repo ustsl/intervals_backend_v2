@@ -4,10 +4,13 @@ from datetime import datetime, timedelta
 from fastapi import HTTPException
 from sqlalchemy import text
 
+from src.database.utils import exception_dal
 from src.database.dals import DAL
 
 
 class TemporaryLinkDAL(DAL):
+
+    @exception_dal
     async def create_or_update(self, dashboard_id: uuid.UUID):
         new_secret = uuid.uuid4()
         new_available_until = datetime.now() + timedelta(days=1)
@@ -33,6 +36,7 @@ class TemporaryLinkDAL(DAL):
         await self.db_session.commit()
         return result
 
+    @exception_dal
     async def get(self, secret_link: uuid.UUID):
         query = text(
             """

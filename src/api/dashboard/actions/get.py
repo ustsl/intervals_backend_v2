@@ -41,6 +41,8 @@ async def _get_dashboard_container(
 async def _get_dashboard(dashboard_id: UUID, account_id: UUID, db: AsyncSession):
     obj_dal = DashboardDAL(db_session=db, model=DashboardModel)
     obj = await obj_dal.get_dashboard(dashboard_id=dashboard_id, account_id=account_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=f"Dashboard not found")
     return obj
 
 

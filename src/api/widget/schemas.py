@@ -31,6 +31,7 @@ class WidgetDataSchema(BaseModel):
 
 class FullWidgetSchema(WidgetDataSchema, WidgetSchema):
     container: Optional[List[Dict[str, Any]]] = None
+    info: Optional[str] = ""
 
 
 class WidgetPostSchema(WidgetSchema, WidgetDataSchema):
