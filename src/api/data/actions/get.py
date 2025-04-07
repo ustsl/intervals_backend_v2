@@ -22,6 +22,6 @@ async def _get_data_containers(
     obj_dal = DataDAL(db_session=db, model=DataModel)
 
     obj = await obj_dal.list(
-        account=account_id, offset=offset, page_size=5, title=title
+        account=account_id, offset=offset, page_size=offset, title=title
     )
     return obj
