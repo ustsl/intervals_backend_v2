@@ -26,7 +26,7 @@ current_user = fastapi_users.current_user()
 
 @router.get("/", response_model=PaginatedDataSchema, status_code=200)
 async def get_data_containers(
-    offset: int = 50,
+    offset: int = 0,
     title: Optional[str] = None,
     user=Depends(current_user),
     db: AsyncSession = Depends(get_db),
