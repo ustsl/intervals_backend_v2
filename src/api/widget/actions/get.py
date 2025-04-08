@@ -12,7 +12,7 @@ async def _get_widget_containers(
 ):
     obj_dal = WidgetDAL(db_session=db, model=WidgetModel)
     obj = await obj_dal.list(
-        account=account_id, offset=offset, page_size=5, title=title
+        account=account_id, offset=offset, page_size=50, title=title
     )
     return obj
 

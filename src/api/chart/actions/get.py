@@ -13,7 +13,7 @@ async def _get_chart_containers(
 ):
     obj_dal = ChartDAL(db_session=db, model=ChartModel)
     obj = await obj_dal.list(
-        account=account_id, offset=offset, page_size=20, title=title
+        account=account_id, offset=offset, page_size=50, title=title
     )
     return obj
 
