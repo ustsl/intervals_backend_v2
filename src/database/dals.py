@@ -173,16 +173,13 @@ class AccountBaseDAL(DAL):
 
     @exception_dal
     async def delete(self, id: UUID, account: UUID):
-        try:
-            query = delete(self.model).where(
-                self.model.id == id, self.model.account == account
-            )
-            await self.db_session.execute(query)
-            await self.db_session.commit()
-            return {"success": "Obj deleted successfully"}
-        except Exception as e:
-            await self.db_session.rollback()
-            return {"error": f"Error deleting: {str(e)}"}
+
+        query = delete(self.model).where(
+            self.model.id == id, self.model.account == account
+        )
+        await self.db_session.execute(query)
+        await self.db_session.commit()
+        return {"success": "Obj deleted successfully"}
 
     @exception_dal
     async def update(self, id: UUID, account: UUID, **kwargs):
