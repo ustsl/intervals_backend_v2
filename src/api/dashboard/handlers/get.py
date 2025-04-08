@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 import fastapi_users
 from fastapi import APIRouter, Depends
@@ -19,11 +20,14 @@ current_user = fastapi_users.current_user()
 
 @router.get("/", response_model=PaginateDashboardSchema, status_code=200)
 async def get_dashboards(
-    offset: str = 0, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+    offset: int = 0,
+    title: Optional[str] = None,
+    user=Depends(current_user),
+    db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account_or_create(user_id=user.id, db=db)
     data_containers = await _get_dashboard_containers(
-        account_id=account.id, offset=offset, db=db
+        account_id=account.id, offset=offset, title=title, db=db
     )
     return data_containers
 

@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 from uuid import UUID
 
 from fastapi import HTTPException
@@ -12,9 +12,13 @@ from src.database.models.dashboard_model.tables import (
 )
 
 
-async def _get_dashboard_containers(account_id: UUID, offset: int, db: AsyncSession):
+async def _get_dashboard_containers(
+    account_id: UUID, offset: int, title: Optional[str], db: AsyncSession
+):
     obj_dal = DashboardDAL(db_session=db, model=DashboardModel)
-    obj = await obj_dal.list(account=account_id, offset=offset, page_size=50)
+    obj = await obj_dal.list(
+        account=account_id, offset=offset, page_size=50, title=title
+    )
     return obj
 
 
