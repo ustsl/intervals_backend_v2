@@ -83,5 +83,5 @@ async def delete_widget_container(
     db: AsyncSession = Depends(get_db),
 ):
     account = await _get_account(user_id=user.id, db=db)
-    delete = await _delete_widget_container(data_id=id, account_id=account.id, db=db)
+    delete = await _delete_widget_container(widget_id=id, account_id=account.id, db=db)
     return delete

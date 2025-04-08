@@ -84,6 +84,6 @@ async def delete_chart_container(
 ):
     account = await _get_account(user_id=user.id, db=db)
     delete = await _delete_chart_container(
-        data_id=chart_id, account_id=account.id, db=db
+        chart_id=chart_id, account_id=account.id, db=db
     )
     return delete
