@@ -17,6 +17,17 @@ DB_PASSWORD = os.getenv("DATABASE_PASSWORD")
 DB_HOST = os.getenv("DATABASE_HOST")
 TEST_DB_NAME = os.getenv("DATABASE_NAME_TEST")
 
+EMAIL_HOST_USER = os.getenv("EMAIL_ADDR")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
+
+
+EMAIL_HOST = "mail.netangels.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv("EMAIL_ADDR")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+
 
 print(f"Database name: {DB_NAME}")
 print(f"Database user: {DB_USER}")
